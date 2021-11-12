@@ -3,4 +3,8 @@
   tasks:
     - name: Hello Message
       debug:
-        msg: "Hello World!"
+        msg: "Hello this!!"
+        
+    - name: Hello Message2
+      debug:
+        msg: "Hello that!!"
