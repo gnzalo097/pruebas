@@ -16,4 +16,4 @@
         name: vlan-200
         interfaces: eth0
      
-        state:present
+        state: present
