@@ -11,6 +11,7 @@
         vlan_id: 100
         name: vlan-100
         interfaces: eth0
+        address: 192.168.2.100
         state: present
       
     - name: Crear VLAN 200
@@ -18,4 +19,5 @@
         vlan_id: 200
         name: vlan-200
         interfaces: eth0
+        address: 192.168.2.200
         state: present
