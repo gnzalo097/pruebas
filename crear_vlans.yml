@@ -14,6 +14,7 @@
         state: present
       
     - name: Crear VLAN 200
+      vyos_vlan:
         vlan_id: 200
         name: vlan-200
         interfaces: eth0
