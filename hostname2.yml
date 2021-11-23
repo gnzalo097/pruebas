@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+    - name: Configure hostname
+      vyos_system:
+        host_name: super-vyos
+        name_server: 192.168.2.2
+        state: present
+        
