@@ -8,5 +8,7 @@
   tasks:
     - name: Hacer ping
       vyos_ping:
+        count: 4
         dest: 192.168.2.2
+        interval: 1
         source: 192.168.2.59
