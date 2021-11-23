@@ -11,5 +11,5 @@
         config:
         - name: eth0
           description: "esto es algo"
-          mtu: 1000
+          mtu: 9000
      
