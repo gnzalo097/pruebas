@@ -6,14 +6,15 @@
   gather_facts: 'no'
   
   tasks:
-    - name: Crear dos VLAN
+    - name: Crear VLAN 100
       vyos_vlan:
         vlan_id: 100
         name: vlan-100
         interfaces: eth0
-        
+        state: present
+      
+    - name: Crear VLAN 200
         vlan_id: 200
         name: vlan-200
         interfaces: eth0
-     
         state: present
