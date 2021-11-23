@@ -9,4 +9,4 @@
     - name: Configure hostname
       vyos_config:
         lines:
-          - set system host-name vyosito
+          - set system host-name router-vyos
