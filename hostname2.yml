@@ -9,6 +9,6 @@
     - name: Configure hostname
       vyos_system:
         host_name: super-vyos
-        name_server: 192.168.2.2
+        name_server: 192.168.3.3
         state: present
         
