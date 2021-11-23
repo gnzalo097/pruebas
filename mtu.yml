@@ -10,6 +10,6 @@
       vyos_interfaces:
         config:
         - name: eth0
-          description: "esto es una descipcion de la interfaz"
+          description: "esto es algo"
           mtu: 1000
      
