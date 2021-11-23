@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+    - name: Configure mtu
+      vyos_interfaces:
+        config:
+        - name: eth0
+          description: "esto es una descipcion de la interfaz"
+     
