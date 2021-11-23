@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+    - name: Configure vyos
+      vyos_config:
+        lines:
+          - set system host-name router-vyos
+          - set system name-server 192.168.1.1
+          - set system tune-zone America/Los_Angeles
+          - set interfaces ethernet eht0 description "Configured by ansible"
