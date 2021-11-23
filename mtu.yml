@@ -11,4 +11,5 @@
         config:
         - name: eth0
           description: "esto es una descipcion de la interfaz"
+          mtu: 1000
      
