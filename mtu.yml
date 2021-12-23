@@ -15,7 +15,7 @@
         config:
         - name: eth0
           description: "esto es la descripcion de la interfaz"
-          mtu: 6000
+          mtu: 8000
       register: commands
           
     - name: print all returned values
