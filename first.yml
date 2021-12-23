@@ -1,7 +1,5 @@
 ---
-
 - hosts: all
-
   connection: network_cli
   gather_facts: 'no'
   
@@ -9,13 +7,10 @@
     - name: Get Config for Vyos Device
       vyos_facts:
         gather_subset: config
-        register: data_struct
-        
-    - name: Enseña la configuracion
+
+    - name: Display config
       debug:
-        msg: "The config is {{ data_struct }}"        
-        
-        
+        msg: "The config is {{ ansible_net_config }}"    
 
         
      
