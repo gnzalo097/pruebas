@@ -14,8 +14,10 @@
           mtu: 8000
           register: data
           
-     - name: print all returned values
-       debug:
-         msg: "{{ data }}"
+    - name: print all returned values
+      debug:
+        msg: "{{ data }}"
+
+         
           
      
