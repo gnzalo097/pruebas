@@ -11,7 +11,7 @@
         gather_subset: config
         register: data_struct
         
-    - name: Display config
+    - name: Enseña la configuracion
       debug:
         msg: "The config is {{ data_struct }}"        
         
