@@ -6,6 +6,10 @@
   gather_facts: 'no'
   
   tasks:
+    - name: print hola
+      debug:
+        msg: "hola"
+        
     - name: Configure mtu
       vyos_interfaces:
         config:
