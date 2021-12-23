@@ -20,7 +20,7 @@
           
     - name: print all returned values
       debug:
-        msg: "{{ variable.msg.commands }}"
+        msg: "{{ variable.commands }}"
 
          
           
