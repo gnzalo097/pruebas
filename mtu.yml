@@ -12,11 +12,11 @@
         - name: eth0
           description: "esto es la descripcion de la interfaz"
           mtu: 8000
-          register: data
+          register: commands
           
     - name: print all returned values
       debug:
-        msg: "{{ data }}"
+        msg: "{{ commands }}"
 
          
           
