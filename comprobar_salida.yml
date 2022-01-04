@@ -17,7 +17,7 @@
         - result[0] contains Copyright{{':'}}        VyOS maintainers and contributors
         - result[0] contains Hardware vendor{{':'}}  QEMU
         
-        - result[1] contains "CPU(s){{':'}}              1"
+        - result[1] contains CPU(s){{':'}}              1
 
       register: variable
       
