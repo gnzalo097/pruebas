@@ -20,8 +20,10 @@
         - result[1] contains Byte Order{{':'}}          Little Endian
         - result[1] contains CPU MHz{{':'}}             2194
         - result[1] contains Model{{':'}}               6
+        - result[1] contains CPU(s){{':'}}              1
         
       register: variable
+      
       
           
     - name: sacar valores de retorno
