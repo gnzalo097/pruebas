@@ -18,11 +18,12 @@
         - result[0] contains Hardware vendor{{':'}}  QEMU
         
         - result[1] contains Byte Order{{':'}}          Little Endian
-        - result[1] contains CPU MHz{{':'}}             2194                         
+        - result[1] contains CPU MHz{{':'}}             2194
+        - result[1] contains Core(s) per socket{{':'}}  1
         
       register: variable
         
-
+Core(s) per socket:  1
           
     - name: sacar valores de retorno
       debug:
