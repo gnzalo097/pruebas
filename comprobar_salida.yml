@@ -21,6 +21,7 @@
         - result[1] contains CPU MHz{{':'}}             2194
         - result[1] contains Model{{':'}}               6
         - result[1] contains CPU(s){{':'}}              1
+        - result[1] contains CPU family{{':'}}          15
         
       register: variable
       
