@@ -11,12 +11,12 @@
         commands:
         - show version
         - show hardware cpu
- 
-       register: variable
        
         wait_for:
         - result[0] contains 'VyOS 1.3.0-rc4'
         - result[1] contains '40 bits physical'
+        
+        register: variable
         
 
           
