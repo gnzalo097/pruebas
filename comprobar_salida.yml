@@ -13,7 +13,9 @@
         - show hardware cpu
        
         wait_for:
-        - result[0] contains Version{{':'}}          VyOS 1.3.0-rc4  
+        - result[0] contains Version{{':'}}          VyOS 1.3.0-rc4
+        - result[0] contains Copyright{{':'}}        VyOS maintainers and contributors
+        - result[0] contains Hardware vendor{{':'}}  QEMU
         - result[1] contains CPU(s){{':'}}                       
         
       register: variable
