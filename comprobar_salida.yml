@@ -22,5 +22,5 @@
           
     - name: sacar valores de retorno
       debug:
-        msg: "{{ variable.stdout }}"
+        msg: "{{ variable.stdout_lines }}"
       
