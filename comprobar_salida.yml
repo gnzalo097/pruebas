@@ -17,15 +17,39 @@
         - result[0] contains Copyright{{':'}}        VyOS maintainers and contributors
         - result[0] contains Hardware vendor{{':'}}  QEMU
         
-        - result[1] contains Byte Order{{':'}}          Little Endian
-        - result[1] contains CPU MHz{{':'}}             2194
-        - result[1] contains Model{{':'}}               6
-        - result[1] contains CPU(s){{':'}}              1
-        - result[1] contains CPU family{{':'}}          15
+       
+        - result[1] contains "Architecture{{':'}}        x86_64"
+        - result[1] contains "CPU op-mode(s){{':'}}      32-bit, 64-bit"
+        - result[1] contains "Byte Order{{':'}}          Little Endian"
+        - result[1] contains "Address sizes{{':'}}       40 bits physical, 48 bits virtual"
+        - result[1] contains "CPU(s){{':'}}              1"
+        - result[1] contains "On-line CPU(s) list{{':'}} 0"
+        - result[1] contains "Thread(s) per core{{':'}}  1"
+        - result[1] contains "Core(s) per socket{{':'}}  1"
+        - result[1] contains "Socket(s){{':'}}           1"
+        - result[1] contains "Vendor ID{{':'}}           GenuineIntel"
+        - result[1] contains "CPU family{{':'}}          15"
+        - result[1] contains "Model{{':'}}               6"
+        - result[1] contains "Model name{{':'}}          Common KVM processor"
+        - result[1] contains "Stepping{{':'}}            1"
+        - result[1] contains "CPU MHz{{':'}}             2194.848"
+        - result[1] contains "BogoMIPS{{':'}}            4389.69"
+        - result[1] contains "Hypervisor vendor{{':'}}   KVM"
+        - result[1] contains "Virtualization type{{':'}} full"
+        - result[1] contains "L1d cache{{':'}}           32K"
+        - result[1] contains "L1i cache{{':'}}           32K"
+        - result[1] contains "L2 cache{{':'}}            4096K"
+        - result[1] contains "L3 cache{{':'}}            16384K"
+        - result[1] contains "Flags{{':'}}               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx lm constant_tsc nopl xtopology cpuid tsc_known_freq pni cx16 x2apic hypervisor lahf_lm cpuid_fault pti"
+
+
+
+
         
       register: variable
       
-      
+
+
           
     - name: sacar valores de retorno
       debug:
