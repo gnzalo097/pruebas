@@ -22,5 +22,5 @@
           
     - name: sacar valores de retorno
       debug:
-        msg: "{{ variable.failed_conditions }}"
+        msg: "{{ variable }}"
       
