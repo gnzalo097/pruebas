@@ -19,7 +19,7 @@
         
         - result[1] contains Byte Order{{':'}}          Little Endian
         - result[1] contains CPU MHz{{':'}}             2194
-        - result[1] contains Core(s) per socket{{':'}}  1
+        - result[1] contains Model{{':'}}               6
         
       register: variable
         
