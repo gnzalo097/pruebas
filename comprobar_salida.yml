@@ -22,8 +22,7 @@
         - result[1] contains Model{{':'}}               6
         
       register: variable
-        
-Core(s) per socket:  1
+      
           
     - name: sacar valores de retorno
       debug:
