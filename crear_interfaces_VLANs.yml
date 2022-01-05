@@ -7,15 +7,21 @@
   
   tasks:
   
-    - name: Merge provided configuration with device configuration
-      vyos_interfaces:
+    - name: proabandoooo
+      vyos_l3_interfaces:
         config:
         - name: eth1
-          description: Configured by Ansible
-          enabled: true
+          ipv4:
+          - address: 170.1.1.1/24
           vifs:
-          - vlan_id: 500
-            description: VIF 100 - ETH1    
+          - vlan_id: 200
+            ipv4:
+            - address: 200.1.1.1/28
+          - vlan_id: 100
+            ipv4:
+            - address: 100.1.1.1/28
+
+          
           
    
 
