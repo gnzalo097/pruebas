@@ -8,17 +8,17 @@
   tasks:
   
     - name: Crear interfaces
-      vyos_interfaces:
+      vyos_l3_interfaces:
         config:
-        - name: eth3
-          description: descripcion interfaz eth3
-          duplex: full
-          enabled: true
+        - name: eth1
+          ipv4:
+          - address: 172.1.1.1/24
+
+        - name: eth2
+          ipv4:
+          - address: 172.1.1.2/24
           
-        - name: eth4
-          description: descripcion interfaz eth4
-          duplex: full
-          enabled: true
+
            
         
 
