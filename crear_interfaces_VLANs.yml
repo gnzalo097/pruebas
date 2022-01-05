@@ -7,20 +7,16 @@
   
   tasks:
   
-    - name: crear interfaz
-      vyos_l3_interfaces:
-        config:
-        - name: eth1
-          ipv4:
-            - address: 172.1.1.1/24
+    - name: Merge provided configuration with device configuration
+      vyos_interfaces:
+      config:
+      - name: eth1
+        description: Configured by Ansible
+        enabled: true
+        vifs:
+        - vlan_id: 100
+          description: VIF 100 - ETH1    
           
-          
-    - name: Create vlan
-      vyos_vlan:
-        interfaces: eth1
-        vlan_id: 100
-        name: vlan-100
-
    
-              
+
 
