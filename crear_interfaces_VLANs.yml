@@ -7,7 +7,7 @@
   
   tasks:
   
-    - name: proabandoooo
+    - name: crear interfaz eth1 y dos VLANs
       vyos_l3_interfaces:
         config:
         - name: eth1
