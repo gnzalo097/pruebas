@@ -20,9 +20,6 @@
           duplex: full
           enabled: true
              
-        register: variable
+        state: merged
         
-        
-    - name: sacar valores de retorno del moludo command
-      debug:
-        msg: "{{ variable }}"
+
