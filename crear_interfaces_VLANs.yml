@@ -14,5 +14,7 @@
           ipv4:
             - address: 172.1.1.50/24
          
-        
+        - name: eth2
+          ipv4:
+            - address: 172.1.1.2/24       
 
