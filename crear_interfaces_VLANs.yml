@@ -8,12 +8,12 @@
   tasks:
   
     - name: Crear interfaces
-      vyos_l3_interfaces:
-        config:
-        - name: eth1
-          ipv4:
-          - address: 172.1.1.1/24
+        vyos_l3_interfaces:
+          config:
+          - name: eth1
+            ipv4:
+            - address: 172.1.1.1/24
 
-      state: merged           
+        state: merged           
         
 
