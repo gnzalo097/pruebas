@@ -25,7 +25,7 @@
       register: variable
         
         
-    - name: sacar valores de retorno del moludo command
+    - name: sacar valores de retorno del moludo interfaces
       debug:
         msg: "{{ variable }}"         
    
