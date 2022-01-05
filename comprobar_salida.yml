@@ -26,4 +26,8 @@
           
     - name: sacar valores de retorno
       debug:
-        msg: "{{ variable.stdout_lines }}"
+        msg: "{{ variable }}"
+        
+     - name: sacar salida
+      debug:
+        msg: "{{ variable.stdout_lines }}"    
