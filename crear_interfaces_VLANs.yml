@@ -9,13 +9,13 @@
   
     - name: Merge provided configuration with device configuration
       vyos_interfaces:
-      config:
-      - name: eth1
-        description: Configured by Ansible
-        enabled: true
-        vifs:
-        - vlan_id: 500
-          description: VIF 100 - ETH1    
+        config:
+        - name: eth1
+          description: Configured by Ansible
+          enabled: true
+          vifs:
+          - vlan_id: 500
+            description: VIF 100 - ETH1    
           
    
 
