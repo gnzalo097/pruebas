@@ -6,18 +6,23 @@
   gather_facts: 'no'
   
   tasks:
-    - name: Crear VLAN 100
-      vyos_vlan:
-        vlan_id: 100
-        name: vlan-100
-        interfaces: eth0
-        address: 192.168.2.100
-        state: present
-      
-    - name: Crear VLAN 200
-      vyos_vlan:
-        vlan_id: 200
-        name: vlan-200
-        interfaces: eth0
-        address: 192.168.2.200
-        state: present
+  
+    - name: Crear interfaces
+      vyos_interfaces:
+        config:
+        - name: eth1
+          description: descripcion interfaz eth1
+          duplex: full
+          enabled: true
+          
+        - name: eth2
+          description: descripcion interfaz eth2
+          duplex: full
+          enabled: true
+             
+        register: variable
+        
+        
+    - name: sacar valores de retorno del moludo command
+      debug:
+        msg: "{{ variable }}"
