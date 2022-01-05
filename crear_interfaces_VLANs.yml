@@ -10,8 +10,9 @@
     - name: Merge provided configuration with device configuration
       vyos_l3_interfaces:
         config:
-        - name: eth2
-
+        - name: eth1
+          ipv4:
+            - address: 172.1.1.50/24
          
         
 
