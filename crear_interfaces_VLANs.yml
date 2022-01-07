@@ -23,6 +23,15 @@
 
           
       register: variable
+      
+    - name: configurar eth1
+      vyos_interfaces:
+        config:
+        - name: eth1
+          description: "esto es la descripcion de la interfaz eth1"
+          mtu: 6000
+          duplex: full
+          speed: auto
         
         
     - name: sacar valores de retorno del moludo interfaces
