@@ -13,8 +13,8 @@
     - name: Configure mtu
       vyos_interfaces:
         config:
-        - name: eth0
-          description: "esto es la descripcion de la interfaz"
+        - name: eth1
+          description: "esto es la descripcion de la interfaz eth1"
           mtu: 6000
       register: variable
           
