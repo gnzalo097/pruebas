@@ -11,7 +11,7 @@
         commands:
         - "{{ comando1 }}"
         - "{{ comando2 }}"
-        - "{{ comandos }}"  
+        - "{{ comando3 }}"  
         
       register: variable
         
