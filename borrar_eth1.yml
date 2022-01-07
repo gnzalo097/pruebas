@@ -6,9 +6,9 @@
   gather_facts: 'no'
 
   tasks:
-    - name: borrar interfaz eht1
-      vyos_command:
-        commands:
+    - name: borrar eth1
+      vyos_config:
+        lines:
         - delete interfaces ethernet eth1
 
     - name: comprobar interfaces
