@@ -10,21 +10,21 @@
     - name: crear interfaz {{ nombre_interfaz }} y dos VLANs
       vyos_l3_interfaces:
         config:
-        - name: {{ nombre_interfaz }}
+        - name: "{{ nombre_interfaz }}"
           ipv4:
-          - address: {{ ip_interfaz }}
+          - address: "{{ ip_interfaz }}"
           vifs:
-          - vlan_id: {{ vlan_id_1 }}
+          - vlan_id: "{{ vlan_id_1 }}"
             ipv4:
-            - address: {{ ip_vlan_1 }}
-          - vlan_id: {{ vlan_id_2 }}
+            - address: "{{ ip_vlan_1 }}"
+          - vlan_id: "{{ vlan_id_2 }}"
             ipv4:
-            - address: {{ ip_vlan_2 }}
+            - address: "{{ ip_vlan_2 }}"
 
           
     - name: configurar {{ nombre_interfaz }}
       vyos_interfaces:
         config:
-        - name: {{ nombre_interfaz }}
-          description: {{ descripcion_interfaz }}
-          mtu: {{ valor_mtu }}
+        - name: "{{ nombre_interfaz }}"
+          description: "{{ descripcion_interfaz }}"
+          mtu: "{{ valor_mtu }}"
