@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+  
+    - name: crear interfaz eth1 y dos VLANs
+      vyos_l3_interfaces:
+        config:
+        - name: eth1
+          ipv4:
+          - address: {{ ip_eth1 }}
+          vifs:
+          - vlan_id: {{ vlan_id_1 }}
+            ipv4:
+            - address: {{ ip_vlan1 }}
+          - vlan_id: {{ vlan_id_2 }}
+            ipv4:
+            - address: {{ ip_vlan2 }}
+
+          
+      register: variable
+        
+        
+    - name: sacar valores de retorno del moludo interfaces
+      debug:
+        msg: "{{ variable }}"
