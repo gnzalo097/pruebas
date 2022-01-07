@@ -11,6 +11,6 @@
         lines:
           - set system host-name {{ hostname_equipo }}
           
-     - name: Hello to
+    - name: Hello to
       debug:
         msg: "Good morning {{ nombre_persona}} !!"
