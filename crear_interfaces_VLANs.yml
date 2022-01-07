@@ -28,4 +28,3 @@
         - name: eth1
           description: "esto es la descripcion de la interfaz eth1"
           mtu: 6000
-          duplex: full
