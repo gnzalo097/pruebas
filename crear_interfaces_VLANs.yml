@@ -26,5 +26,5 @@
       vyos_interfaces:
         config:
         - name: eth1
-          description: "esto es la descripcion de la interfaz eth1"
+          description: "descripcion de interfaz"
           mtu: 6000
