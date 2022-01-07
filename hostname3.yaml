@@ -9,4 +9,8 @@
     - name: Configure hostname
       vyos_config:
         lines:
-          - set system host-name {{ hostname }}
+          - set system host-name {{ hostname_equipo }}
+          
+     - name: Hello to
+      debug:
+        msg: "Good morning {{ nombre_persona}} !!"
