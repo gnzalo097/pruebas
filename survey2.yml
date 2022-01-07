@@ -6,7 +6,7 @@
   gather_facts: 'no'
   
   tasks:
-    - name: ejecutar comandos y comprobar salidas
+    - name: ejecutar comandos
       vyos_command:
         commands:
         - "{{ comando1 }}"
