@@ -22,9 +22,9 @@
             - address: 100.1.1.1/28
 
           
-      register: variable
+      register: variable1
       
-    - name: configurar eth1
+    - name: configurar interfaz eth1
       vyos_interfaces:
         config:
         - name: eth1
@@ -33,10 +33,13 @@
           duplex: full
           speed: auto
         
+      register: variable2
         
+    - name: sacar valores de retorno del moludo interfaces_l3
+      debug:
+        msg: "{{ variable1 }}"         
+   
     - name: sacar valores de retorno del moludo interfaces
       debug:
-        msg: "{{ variable }}"         
-   
-
+        msg: "{{ variable2 }}"
 
