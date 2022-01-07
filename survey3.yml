@@ -7,24 +7,24 @@
   
   tasks:
   
-    - name: crear interfaz eth1 y dos VLANs
+    - name: crear interfaz {{ nombre_interfaz }} y dos VLANs
       vyos_l3_interfaces:
         config:
-        - name: eth1
+        - name: {{ nombre_interfaz }}
           ipv4:
-          - address: {{ ip_eth1 }}
+          - address: {{ ip_interfaz }}
           vifs:
           - vlan_id: {{ vlan_id_1 }}
             ipv4:
-            - address: {{ ip_vlan1 }}
+            - address: {{ ip_vlan_1 }}
           - vlan_id: {{ vlan_id_2 }}
             ipv4:
-            - address: {{ ip_vlan2 }}
+            - address: {{ ip_vlan_2 }}
 
           
-      register: variable
-        
-        
-    - name: sacar valores de retorno del moludo interfaces
-      debug:
-        msg: "{{ variable }}"
+    - name: configurar {{ nombre_interfaz }}
+      vyos_interfaces:
+        config:
+        - name: {{ nombre_interfaz }}
+          description: {{ descripcion_interfaz }}
+          mtu: {{ valor_mtu }}
