@@ -20,3 +20,9 @@
         - result[1] contains "Architecture{{':'}}        x86_64"
         - result[1] contains "CPU(s){{':'}}              1"
         - result[1] contains "Thread(s) per core{{':'}}  1"
+        
+      register: variable
+        
+    - name: sacar salida de los comandos que se han metido
+      debug:
+        msg: "{{ variable.stdout_lines }}"
