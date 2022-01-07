@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+    - name: borrar interfaz eht1
+      vyos_command:
+        commands:
+        - delete interfaces ethernet eth1
+        
+    - name: comprobar interfaces
+      vyos_command:
+        commands:
+        - show interfaces
+       
+
+      register: variable
+      
+    - name: salida del comando show interfaces
+      debug:
+        msg: "{{ variable.stdout_lines }}"     
