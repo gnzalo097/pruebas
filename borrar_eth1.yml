@@ -9,6 +9,8 @@
     - name: borrar eth1
       vyos_config:
         lines:
+        - delete interfaces ethernet eth1 vif 100
+        - delete interfaces ethernet eth1 vif 200
         - delete interfaces ethernet eth1
 
     - name: comprobar interfaces
