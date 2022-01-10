@@ -21,13 +21,12 @@
         - result[1] contains "CPU(s){{':'}}              1"
         - result[1] contains "Thread(s) per core{{':'}}  1"
 
-
       register: variable
   
           
     - name: sacar valores de retorno del moludo command
       debug:
-        msg: "{{ result[0] }}"
+        msg: "{{ variable }}"
         
     - name: sacar salida de los comandos que se han metido
       debug:
