@@ -30,4 +30,8 @@
         
     - name: sacar salida de los comandos que se han metido
       debug:
-        msg: "{{ variable.stdout_lines }}"         
+        msg: "{{ variable.stdout_lines }}"
+        
+    - name: sacar changed
+      debug:
+        msg: "{{ variable.changed }}"   
