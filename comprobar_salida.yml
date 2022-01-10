@@ -34,4 +34,4 @@
         
     - name: sacar changed
       debug:
-        msg: "{{ variable.changed }}"   
+        var: variable.changed    
