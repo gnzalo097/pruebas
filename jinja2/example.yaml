@@ -11,6 +11,13 @@
         src: ./template.j2 
         dest: ./output.txt
 
+    - name: This command will change the working directory to somedir/
+      shell:
+        cmd: ls -la
+
+    - name: This command will change the working directory to somedir/
+      shell:
+        cmd: pwd
     
     - name: file lookup demo
       debug:
