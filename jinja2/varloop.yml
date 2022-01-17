@@ -12,4 +12,8 @@
           src=./varloop.j2 
           dest=./output.txt
 
-
+      - name: OUTPUT 
+        shell:
+          cmd: cat ./output.txt
+          
+          
