@@ -15,23 +15,18 @@
       shell:
         cmd: ls -la
 
-    - name: This command will change the working directory to somedir/
+    - name: 1
       shell:
-        cmd: git --version
+        cmd: git add jinja2/output.txt
 
-    - name: This command 
+    - name: 2
       shell:
-        cmd: git config --list
+        cmd: git commit -m "comiteando"
 
-    - name: This command 
+    - name: 3
       shell:
-        cmd: git branch
-
-    - name: This command 
-      shell:
-        cmd: git status
+        cmd: git push origin awx_internal/2bd38d9b-c206-4f8a-8162-aa0cdae5bdfa
 
     - name: OUTPUT 
       shell:
         cmd: cat ./jinja2/output.txt
-
