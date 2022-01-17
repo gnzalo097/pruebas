@@ -11,8 +11,7 @@
         src: ./template.j2 
         dest: ./output.txt
 
-      register: variable
     
-    - name: sacar salida 
+    - name: file lookup demo
       debug:
-        msg: "{{ variable }}"
+        msg: "{{ lookup('file', './output.txt') }}"
