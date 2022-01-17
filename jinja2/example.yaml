@@ -9,4 +9,10 @@
     - name: A Loop example 
       template: 
         src: ./template.j2 
-        dest: ./output.txt 
+        dest: ./output.txt
+
+      register: variable
+    
+    - name: sacar salida 
+      debug:
+        msg: "{{ variable }}"
