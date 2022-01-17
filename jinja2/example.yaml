@@ -3,22 +3,13 @@
   connection: network_cli
   gather_facts: 'no'
   vars : 
-    cars: ['Mercedes','Ford','Nissan']
+    cars: ['Mercedes','Ford','Nissan', 'Audi', 'Ferrari']
 
   tasks: 
     - name: A Loop example 
       template: 
         src: ./template.j2 
         dest: ./jinja2/output.txt
-
-    - name: This command will change the working directory to somedir/
-      shell:
-        cmd: ls -la
-
-    - name: COMANDITOS
-      shell: |
-        cd jinja2
-        ls -la
 
     - name: OUTPUT 
       shell:
