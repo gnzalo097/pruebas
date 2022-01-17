@@ -14,7 +14,6 @@
     - name: This command will change the working directory to somedir/
       shell:
         cmd: ls -la
-        cmd: ls
 
     - name: This command 
       shell:
@@ -22,12 +21,13 @@
 
     - name: This command 
       shell:
-        cmd: cat /tmp/bwrap_400_q0cdynec/awx_400_1su53m_j/project/output.txt
+        cmd: cat ./output.txt
 
     - name: This command 
       shell:
-        cmd: cat ./output.txt
-    
+        cmd: cat ./jinja2/output.txt
+
     - name: file lookup demo
       debug:
         msg: "{{ lookup('file', ./output.txt ) }}"
+
