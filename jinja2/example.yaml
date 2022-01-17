@@ -15,6 +15,10 @@
       shell:
         cmd: ls -la
 
+    - name: This command will change the working directory to somedir/
+      shell:
+        cmd: cd jinja2 | ls -la
+
     - name: This command 
       shell:
         cmd: pwd
@@ -23,8 +27,5 @@
       shell:
         cmd: cat ./jinja2/output.txt
 
-    - name: file lookup demo
-      debug:
-        msg: "{{ lookup('file', ./output.txt ) }}"
 
 
