@@ -17,11 +17,19 @@
 
     - name: This command will change the working directory to somedir/
       shell:
+        cmd: git --version
+
+    - name: This command 
+      shell:
         cmd: git config --list
 
     - name: This command 
       shell:
         cmd: git branch
+
+    - name: This command 
+      shell:
+        cmd: git status
 
     - name: OUTPUT 
       shell:
