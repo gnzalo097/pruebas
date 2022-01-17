@@ -14,4 +14,4 @@
     
     - name: file lookup demo
       debug:
-        msg: "{{ lookup('file', './output.txt') }}"
+        msg: "{{ lookup('file', 'output.txt') }}"
