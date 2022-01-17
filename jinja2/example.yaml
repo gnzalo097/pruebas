@@ -21,13 +21,10 @@
 
     - name: This command 
       shell:
-        cmd: cat ./output.txt
-
-    - name: This command 
-      shell:
         cmd: cat ./jinja2/output.txt
 
     - name: file lookup demo
       debug:
         msg: "{{ lookup('file', ./output.txt ) }}"
+
 
