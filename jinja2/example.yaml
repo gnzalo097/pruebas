@@ -19,9 +19,6 @@
       shell:
         cmd: git add jinja2/output.txt
 
-    - name: 2
-      shell:
-        cmd: git commit -m "comiteando"
 
     - name: 3
       shell:
