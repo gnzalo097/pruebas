@@ -9,16 +9,22 @@
     - name: A Loop example 
       template: 
         src: ./template.j2 
-        dest: ./output.txt
+        dest: ./jinja2/output.txt
 
     - name: This command will change the working directory to somedir/
       shell:
         cmd: ls -la
+        cmd: ls
 
-    - name: This command will change the working directory to somedir/
+    - name: This command 
       shell:
         cmd: pwd
+
+    - name: This command 
+      shell:
+        cmd: cat output.txt
     
     - name: file lookup demo
       debug:
         msg: "{{ lookup('file', ./output.txt ) }}"
+
