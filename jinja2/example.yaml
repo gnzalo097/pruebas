@@ -19,6 +19,10 @@
       shell:
         cmd: git config --list
 
+    - name: This command 
+      shell:
+        cmd: git branch
+
     - name: OUTPUT 
       shell:
         cmd: cat ./jinja2/output.txt
