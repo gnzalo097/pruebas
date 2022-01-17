@@ -15,15 +15,13 @@
       shell:
         cmd: ls -la
 
-    - name: 1
-      shell:
-        cmd: git add jinja2/output.txt
-
-
-    - name: 3
-      shell:
-        cmd: git push origin awx_internal/2bd38d9b-c206-4f8a-8162-aa0cdae5bdfa
+    - name: COMANDITOS
+      shell: |
+        git --version
+        git config --list
+        git status
 
     - name: OUTPUT 
       shell:
         cmd: cat ./jinja2/output.txt
+
