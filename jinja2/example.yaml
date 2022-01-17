@@ -3,7 +3,7 @@
   connection: network_cli
   gather_facts: 'no'
   vars : 
-    cars: ['Mercedes' , ' Ford' , 'Nissan' ]
+    cars: ['Mercedes','Ford','Nissan']
 
   tasks: 
     - name: A Loop example 
@@ -17,7 +17,7 @@
 
     - name: This command will change the working directory to somedir/
       shell:
-        cmd: cd jinja2 | ls -la
+        cmd: ls jinja2
 
     - name: This command 
       shell:
@@ -26,6 +26,3 @@
     - name: This command 
       shell:
         cmd: cat ./jinja2/output.txt
-
-
-
