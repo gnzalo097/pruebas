@@ -1,7 +1,8 @@
 ---
   - name: Demonstrating variables in Jinja2 Loops
-    hosts: localhost
-    connection: local
+    hosts: all
+    connection: network_cli
+    gather_facts: 'no'
     vars_files:
       - vars.yml
     gather_facts: no
@@ -10,3 +11,6 @@
         template: 
           src=./varloop.j2 
           dest=./output.txt
+
+
+
