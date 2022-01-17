@@ -10,58 +10,9 @@
     - name: A Loop example 
       template: 
         src: ./template.j2 
-        dest: ./jinja2/output.txt
+        dest: ./jinja1/output.txt
 
     - name: OUTPUT 
       shell:
-        cmd: cat ./jinja2/output.txt
+        cmd: cat ./jinja1/output.txt
 
-
-
-
-======================================================================================
-======================================================================================
-
-    - name: This command will change the working directory to somedir/
-      shell:
-        cmd: ls -la
-
-    - name: COMANDITOS
-      shell: |
-        cd jinja2
-        ls -la
-
-
-    - name: COMANDITOS
-      shell: |
-        git add jinja2/output.txt
-        git commit -m "commiteando"
-        git push origin awx_internal/2bd38d9b-c206-4f8a-8162-aa0cdae5bdfa
-
-    - name: COMANDITOS
-      shell: |
-        git --version
-        git config --list
-        git status
-
-
-    - name: 2
-      shell:
-        cmd: git commit -m "comiteando"
-
-
-    - name: This command will change the working directory to somedir/
-      shell:
-        cmd: git --version
-
-    - name: This command 
-      shell:
-        cmd: git config --list
-
-    - name: This command 
-      shell:
-        cmd: git branch
-
-    - name: This command 
-      shell:
-        cmd: git status
