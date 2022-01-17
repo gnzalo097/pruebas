@@ -17,12 +17,13 @@
 
     - name: This command will change the working directory to somedir/
       shell:
-        cmd: ls jinja2
+        cmd: git --version
 
     - name: This command 
       shell:
         cmd: pwd
 
-    - name: This command 
+    - name: OUTPUT 
       shell:
         cmd: cat ./jinja2/output.txt
+
