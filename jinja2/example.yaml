@@ -17,11 +17,9 @@
 
     - name: COMANDITOS
       shell: |
-        git --version
-        git config --list
-        git status
+        cd jinja2
+        ls -la
 
     - name: OUTPUT 
       shell:
         cmd: cat ./jinja2/output.txt
-
