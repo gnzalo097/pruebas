@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  vars : 
+    cars: ['Mercedes' , ' Ford' , 'Nissan' ]
+
+  tasks: 
+    - name: A Loop example 
+      template: 
+        src: ./template.j2 
+        dest: ./output.txt 
