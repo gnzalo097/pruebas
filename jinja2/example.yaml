@@ -17,11 +17,7 @@
 
     - name: This command will change the working directory to somedir/
       shell:
-        cmd: git --version
-
-    - name: This command 
-      shell:
-        cmd: pwd
+        cmd: git config --list
 
     - name: OUTPUT 
       shell:
