@@ -17,5 +17,5 @@ router ospf {{ ospf.pid }}
   network {{ interfaces.Loopback0.ip }}/{{ interfaces.Loopback0.mask }} area 0
 
 {%- else -%}
-  ip route 0.0.0.0/0 jnkjhkjlhkljhlkjhlkj {{ default_nh }}
+  ip route 0.0.0.0/0 {{ default_nh }}
 {%- endif %}
