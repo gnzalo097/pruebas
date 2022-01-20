@@ -1,0 +1,13 @@
+---
+- hosts: all
+  connection: network_cli
+  gather_facts: 'no'
+  
+  tasks:
+    - name: Get Config for CISCO Device
+      ios_facts:
+        gather_subset: config
+
+    - name: Display config
+      debug:
+        msg: "The config is {{ ansible_net_config }}"    
