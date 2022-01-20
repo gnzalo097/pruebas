@@ -1,4 +1,5 @@
 hostname: router-w-defgw
+routing_protocol: null
 
 interfaces:
   Ethernet1:
