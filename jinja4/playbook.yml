@@ -1,0 +1,16 @@
+---
+- hosts: all
+  connection: network_cli
+  gather_facts: 'no'
+  vars_files:
+    - variables.yml
+
+  tasks: 
+    - name: A Loop example 
+      template: 
+        src: ./template.j2 
+        dest: ./jinja4/output.txt
+
+    - name: OUTPUT 
+      shell:
+        cmd: cat ./jinja4/output.txt
