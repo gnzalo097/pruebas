@@ -4,11 +4,10 @@ interface {{ interface.name }}
   description {{ interface.description | default("NO DESCRIPTION") }}
   ip address {{ interface.address }}
   load-interval {{ interface.load_interval }}
-  {%- if interface.enabled is defined %}
-    {%- if interface.enabled == true %}
-    no shutdown
-    {%- endif %}
+  {%- if interface.enabled is defined and interface.enabled == true %}
+  no shutdown
   {%- endif %}
+
 !
 {%- endfor %}
 !
