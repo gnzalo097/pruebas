@@ -3,7 +3,6 @@
   connection: network_cli
   gather_facts: 'no'
   vars_files:
-    - router2-ospf.yml
     - router1-bgp.yml
 
 
