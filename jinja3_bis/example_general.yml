@@ -4,6 +4,7 @@
   gather_facts: 'no'
   vars_files:
     - router1-bgp.yml
+    - router2-ospf.yml
 
   tasks: 
     - name: A Loop example 
