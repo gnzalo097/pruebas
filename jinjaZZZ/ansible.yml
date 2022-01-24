@@ -14,11 +14,3 @@
     - name: OUTPUT 
       shell:
         cmd: cat ./output.txt
-
-
-
-
-
-    - name: Show vars
-      debug:
-        msg: "{{ access_lists }}"
