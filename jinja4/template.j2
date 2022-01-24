@@ -1,12 +1,12 @@
 !
-{%- for interface in interfaces %}
+{% for interface in interfaces %}
 interface {{ interface.name }}
   description {{ interface.description | default("NO DESCRIPTION") }}
   ip address {{ interface.address }}
   load-interval {{ interface.load_interval }}
-  {%- if interface.enabled is defined and interface.enabled == true %}
+  {% if interface.enabled == true %}
   no shutdown
-  {%- endif %}
+  {% endif %}
 !
 {%- endfor %}
 !
