@@ -1,5 +1,6 @@
 !
 {% for interface in interfaces %}
+
 interface {{ interface.name }}
   description {{ interface.description | default("NO DESCRIPTION") }}
   ip address {{ interface.address }}
