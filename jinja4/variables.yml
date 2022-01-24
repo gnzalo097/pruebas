@@ -1,5 +1,6 @@
 interfaces:
   - name: Vlan177
+    # description: Lan In-Band Network
     address: "10.77.1.68 255.255.255.0"
     load_interval: 5
     enabled: null
@@ -9,4 +10,9 @@ interfaces:
     address: "10.17.17.177 255.255.255.0"
     load_interval: 5
     enabled: true
-    
+
+  - name: Management5
+    description: lab05 - Eth100/3
+    address: "20.20.20.20 255.255.255.0"
+    load_interval: 5
+    enabled: null
