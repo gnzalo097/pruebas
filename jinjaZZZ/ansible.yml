@@ -10,6 +10,7 @@
       template: 
         src: ./template.j2 
         dest: ./jinjaZZZ/output.txt
+        lstrip_blocks: yes
 
     - name: OUTPUT 
       shell:
