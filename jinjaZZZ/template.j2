@@ -1,9 +1,9 @@
 {% for acl, acl_lines in access_lists.items() %}
 ip access-list extended {{ acl }}
   {% for line in acl_lines %}
-    (3){% if line.action == "remark" %}
+    {% if line.action == "remark" %}
     remark {{ line.text }}
-    (4){% elif line.action == "permit" %}
+    {% elif line.action == "permit" %}
     permit {{ line.src }} {{ line.dst }}
     {% endif %}
   {% endfor %}
