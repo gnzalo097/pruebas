@@ -1,6 +1,4 @@
-{% macro fabricante1(ip_net) %}
-{{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('hostmask')}}
-{% endmacro %}
+{% macro fabricante1(ip_net) %} {{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('hostmask')}} {% endmacro %}
 
 {% macro fabricante2(ip_net) %}
 {{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('netmask') }}
@@ -14,7 +12,8 @@
 
 {% macro acl_lines(aclobj, src_pfx, pfx_fmt) %}
 {% for line in aclobj %}
- permit {{ line.prot }} {{ pfx_fmt(src_pfx) }} {{ pfx_fmt(line.ip) }} {% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
+ permit {{ line.prot }} {{ pfx_fmt(src_pfx) }} {{ pfx_fmt(line.ip) }} 
+ {% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
 {% endfor %}
 {% endmacro %}
 
