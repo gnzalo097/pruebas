@@ -14,8 +14,7 @@
 
 {% macro acl_lines(aclobj, src_pfx, pfx_fmt) %}
 {% for line in aclobj %}
- permit {{ line.prot }} {{ pfx_fmt(src_pfx) }} {{ pfx_fmt(line.ip) }} 
-{% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
+ permit {{ line.prot }} {{ pfx_fmt(src_pfx) }} {{ pfx_fmt(line.ip) }} {% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
 {% endfor %}
 {% endmacro %}
 
@@ -24,10 +23,8 @@
 
 
 {% for net in networks %}
-ip access-list extended al_{{ net.name }}
-
+ip access-list extended {{ net.name }}
 {%  for svc in net.services %}
 {{ acl_lines(svc_def[svc], net.prefix, fabricante1) }}
 {%  endfor %}
-
 {% endfor %}
