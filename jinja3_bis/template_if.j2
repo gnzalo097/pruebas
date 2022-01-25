@@ -1,14 +1,8 @@
 {% for router in routers %}
-
   hostname {{ router.hostname }}
   ip routing
-
-{% for intf, idata in router.interfaces.items() %}
-
-  interface {{ intf }}
-  ip address {{ idata.ip }}/{{ idata.mask }}
-
-{% endfor %}  
-
-
+  {% for intf, idata in router.interfaces.items() %}
+    interface {{ intf }}
+    ip address {{ idata.ip }}/{{ idata.mask }}
+  {% endfor %}  
 {% endfor %}
