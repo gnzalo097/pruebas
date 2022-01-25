@@ -1,0 +1,32 @@
+routers:
+
+  - hostname: router-bgp
+    routing_protocol: bgp
+    interfaces:
+      Loopback0: 
+        ip: 10.0.0.1
+        mask: 32
+      Eth5: 
+        ip: 10.0.0.5
+        mask: 5
+
+    bgp:
+      as: 65001
+
+  - hostname: router-ospf
+    routing_protocol: ospf
+    interfaces:
+      Loopback0:
+        ip: 10.0.0.2
+        mask: 32
+
+    ospf:
+      pid: 1
+
+  - hostname: router-prueba
+    routing_protocol: null
+
+    interfaces:
+
+    default: 10.10.0.1
+  
