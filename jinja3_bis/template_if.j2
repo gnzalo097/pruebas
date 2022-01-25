@@ -13,7 +13,7 @@
     router bgp {{ router.bgp.as }}
       router-id {{ router.interfaces.Loopback0.ip }}
       network {{ router.interfaces.Loopback0.ip }}/{{ router.interfaces.Loopback0.mask }}
-  {%- elif router.routing_protocol == 'ospf' -%}
+  {% elif router.routing_protocol == 'ospf' %}
     router ospf {{ router.ospf.pid }}
       router-id {{ router.interfaces.Loopback0.ip }}
       network {{ router.interfaces.Loopback0.ip }}/{{ router.interfaces.Loopback0.mask }} area 0
