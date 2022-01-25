@@ -3,7 +3,7 @@
   connection: network_cli
   gather_facts: 'no'
   vars_files:
-    - router1-bgp.yml
+    - routers.yml
 
 
   tasks: 
@@ -11,6 +11,7 @@
       template: 
         src: ./template_if.j2 
         dest: ./jinja3/output.txt
+        lstrip_blocks: yes
 
     - name: OUTPUT 
       shell:
