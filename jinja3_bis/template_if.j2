@@ -9,5 +9,14 @@
     {% else %}
       exit
   {% endif %}
-{% endfor %}
 
+
+{% if router.routing_protocol == 'bgp' %}
+router bgp {{ router.bgp.as }}
+  router-id {{ router.interfaces.Loopback0.ip }}
+  network {{ router.interfaces.Loopback0.ip }}/{{ router.interfaces.Loopback0.mask }}
+{% else %}
+ip route 0.0.0.0/0 {{ router.default }}
+{% endif %}
+
+{% endfor %}
