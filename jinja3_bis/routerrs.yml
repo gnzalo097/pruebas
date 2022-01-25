@@ -1,0 +1,31 @@
+routers:
+
+  - hostname: router-w-bgp
+    routing_protocol: bgp
+    interfaces:
+      Loopback0: 
+        ip: 10.0.0.1
+        mask: 32
+    bgp:
+      as: 65001
+
+  - hostname: router-w-ospf
+    routing_protocol: ospf
+
+    interfaces:
+      Loopback0:
+        ip: 10.0.0.2
+        mask: 32
+
+    ospf:
+      pid: 1
+
+  - hostname: router-w-defgw
+    routing_protocol: null
+
+    interfaces:
+      Ethernet1:
+        ip: 10.10.0.10
+        mask: 24
+
+    default_nh: 10.10.0.1
