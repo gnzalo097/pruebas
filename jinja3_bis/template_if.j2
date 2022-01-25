@@ -2,7 +2,7 @@
   hostname {{ router.hostname }}
   ip routing
   {% for intf, idata in router.interfaces.items() %}
-    interface {{ intf }}
-    ip address {{ idata.ip }}/{{ idata.mask }}
+    interface {{ intf | default('SIN INTERFACES')}}
+    ip address {{ idata.ip | default(' ') }}/{{ idata.mask | default(' ') }}
   {% endfor %}  
 {% endfor %}
