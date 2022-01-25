@@ -1,12 +1,13 @@
 {% for router in routers %}
   hostname {{ router.hostname }}
   ip routing
-{% if router.interfaces %}
-{% for intf, idata in router.interfaces.items() %}
-    interface {{ intf }}
-    ip address {{ idata.ip  }}/{{ idata.mask }}
-{% endfor %} 
-{% else %}
-    no hay interfaces
-{% endif %}
+  {% if router.interfaces %}
+    {% for intf, idata in router.interfaces.items() %}
+      interface {{ intf }}
+      ip address {{ idata.ip  }}/{{ idata.mask }}
+    {% endfor %} 
+    {% else %}
+      exit
+  {% endif %}
 {% endfor %}
+
