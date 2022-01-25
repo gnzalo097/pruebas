@@ -3,4 +3,12 @@
   hostname {{ router.hostname }}
   ip routing
 
+{% for intf, idata in router.interfaces.items() -%}
+
+  interface {{ intf }}
+  ip address {{ idata.ip }}/{{ idata.mask }}
+
+{%- endfor %}  
+
+
 {% endfor %}
