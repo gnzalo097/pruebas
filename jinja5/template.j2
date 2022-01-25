@@ -10,9 +10,10 @@
 {% endmacro %}
 
 
+
 {% for net in networks %}
 ip access-list extended {{ net.name }}
 {% for service in net.services %}
-{{ print_ACL(services[service], output.fabricante) }}
+{{ print_ACL(services[service], output.mode) }}
 {% endfor %}
 {% endfor %}
