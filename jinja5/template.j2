@@ -27,7 +27,7 @@
 ip access-list extended al_{{ net.name }}
 
 {%-  for svc in net.services -%}
-{{ acl_lines(svc_def[svc], net.prefix, ip_w_pfxlen) }}
+{{ acl_lines(svc_def[svc], net.prefix, fabricante1) }}
 {%  endfor -%}
 
 {% endfor -%}
