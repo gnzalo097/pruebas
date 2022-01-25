@@ -9,7 +9,7 @@
   tasks: 
     - name: A Loop example 
       template: 
-        src: ./template_if.j2 
+        src: ./template.j2 
         dest: ./jinja3/output.txt
         lstrip_blocks: yes
 
