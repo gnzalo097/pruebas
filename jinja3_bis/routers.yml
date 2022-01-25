@@ -23,7 +23,7 @@ routers:
     ospf:
       pid: 1
 
-  - hostname: router-defgw
+  - hostname: router-prueba
     routing_protocol: null
 
     interfaces:
