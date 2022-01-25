@@ -11,7 +11,7 @@ interfaces:
     load_interval: 5
     enabled: true
 
-  - name: Management5
+  - name: Ethernet5
     description: lab05 - Eth100/3
     address: "20.20.20.20 255.255.255.0"
     load_interval: 5
