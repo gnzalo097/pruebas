@@ -3,10 +3,10 @@
   ip routing
 {% if router.interfaces %}
 {% for intf, idata in router.interfaces.items() %}
-  interface {{ intf }}
-  ip address {{ idata.ip  }}/{{ idata.mask }}
+    interface {{ intf }}
+    ip address {{ idata.ip  }}/{{ idata.mask }}
 {% endfor %} 
 {% else %}
-  no hay interfaces
+    no hay interfaces
 {% endif %}
 {% endfor %}
