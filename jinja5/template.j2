@@ -1,30 +1,18 @@
 {% macro fabricante1(ip_net) %} {{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('hostmask')}} {% endmacro %}
 
-{% macro fabricante2(ip_net) %}
-{{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('netmask') }}
-{% endmacro %}
-
-{% macro fabricante3(ip_net) %}
-{{ ip_net|ipaddr('network/prefix') }}
-{% endmacro %}
+{% macro fabricante2(ip_net) %} {{ ip_net|ipaddr('network') }} {{ ip_net|ipaddr('netmask') }} {% endmacro %}
 
 
-
-{% macro acl_lines(aclobj, src_pfx, pfx_fmt) %}
+{% macro print_ACL(aclobj, sintaxis_fabricante) %}
 {% for line in aclobj %}
- permit {{ line.prot }} {{ pfx_fmt(src_pfx) }} {{ pfx_fmt(line.ip) }} {% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
-
+ permit {{ line.prot }} {{ sintaxis_fabricante(line.ip) }} {% if line.prot in ['udp', 'tcp'] %} eq {{ line.port }}{% endif %}
 {% endfor %}
 {% endmacro %}
-
-
-
 
 
 {% for net in networks %}
 ip access-list extended {{ net.name }}
-{%  for svc in net.services %}
-{{ acl_lines(svc_def[svc], net.prefix, fabricante1) }}
-{%  endfor %}
+{% for service in net.services %}
+{{ print_ACL(services[service], output.fabricante) }}
 {% endfor %}
-
+{% endfor %}
