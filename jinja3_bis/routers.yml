@@ -28,8 +28,5 @@ routers:
     routing_protocol: null
 
     interfaces:
-      Ethernet1:
-        ip: 10.10.0.10
-        mask: 24
 
     default_nh: 10.10.0.1
