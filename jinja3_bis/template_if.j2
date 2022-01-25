@@ -3,7 +3,7 @@
   hostname {{ router.hostname }}
   ip routing
 
-{% if router.interfaces.items() is defined %}
+{% if router.interfaces is defined %}
 
 
 {% for intf, idata in router.interfaces.items() %}
