@@ -11,12 +11,3 @@ svc_def:
     - {ip: 10.91.4.0/255.255.255.0, prot: tcp, port: 5009}
     - {ip: 10.91.6.32/27, prot: tcp, port: 6800}
   
-
-
-
-
-
-
-      - facilities
-      - jumphost
-      - EDC
