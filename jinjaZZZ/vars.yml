@@ -3,7 +3,7 @@
   - Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
   - Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
  
-  - hora_minuto_segundo: 22:00:00
+  - hora_minuto_segundo: "22:00:00"
   - dia: 3
   - mes: diciembre
   - ano: 2022
