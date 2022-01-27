@@ -8,3 +8,7 @@
   - mes: diciembre
   - ano: 2022
   - localizacion_canarias: false
+  
+  - Mnemonico_EDC: EDC-150
+  
+  - IPGestion: 192.168.1.1
