@@ -1,7 +1,7 @@
 ---
 
-    Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
-    Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
+  - Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
+  - Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
  
   - fecha_y_hora:
     hora_minuto_segundo: 22:00:00
