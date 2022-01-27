@@ -1,2 +1,9 @@
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
+
+clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+clock timezone MET 1
+clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00
+
+hostname {{ Mnemonico_EDC }}
+
