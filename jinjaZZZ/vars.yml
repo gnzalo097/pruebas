@@ -1,6 +1,5 @@
 ---
-configuraciones_comunes:
-  - banner:
+
     Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
     Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
  
