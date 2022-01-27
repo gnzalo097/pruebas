@@ -1,10 +1,2 @@
-{% for acl, acl_lines in access_lists.items() %}
-ip access-list extended {{ acl }}
-  {% for line in acl_lines %}
-    {% if line.action == "remark" %}
-    remark {{ line.text }}
-    {% elif line.action == "permit" %}
-    permit {{ line.src }} {{ line.dst }}
-    {% endif %}
-  {% endfor %}
-{% endfor %}
+banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
+banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
