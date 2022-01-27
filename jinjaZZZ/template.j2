@@ -2,7 +2,9 @@ banner login @ {{ Texto_Banner_Pre_Autenticacion }} @
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
 
 clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+{% if localizacion_canarias == false %}
 clock timezone MET 1
+{% endif %}
 clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00
 
 hostname {{ Mnemonico_EDC }}
@@ -13,7 +15,9 @@ no service tcp-small-servers
 no service udp-small-servers 
 no service finger
 no service dhcp
-no ip source-route ! no soportado en Catalyst 1000
+{% if modelo_equipo  != Catalyst_1000 %}
+no ip source-route
+{% endif %}
 no ip domain-lookup
 no service config
 no ip bootp server
