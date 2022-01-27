@@ -7,3 +7,37 @@ clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00
 
 hostname {{ Mnemonico_EDC }}
 
+
+no cdp run
+no service tcp-small-servers 
+no service udp-small-servers 
+no service finger
+no service dhcp
+no ip source-route ! no soportado en Catalyst 1000
+no ip domain-lookup
+no service config
+no ip bootp server
+no ip name-server
+
+service nagle
+service tcp-keepalives-in
+ip subnet-zero
+service timestamps debug datetime localtime msec show-timezone
+service timestamps log datetime localtime msec show-timezone
+
+
+interface loopback 600
+description Direccion IP de gestion EDC
+ip address {{IPGestion}} 255.255.255.255
+no ip directed-broadcast
+no ip proxy-arp
+no shutdown
+exit
+
+ip tftp source-interface Loopback 600
+ip ftp source-interface Loopback 600
+ip tacacs source-interface Loopback 600
+logging source-interface Loopback 600
+snmp-server trap-source Loopback 600
+ntp source Loopback 600
+
