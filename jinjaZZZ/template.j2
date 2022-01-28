@@ -1,43 +1,27 @@
 {# THIS IS A COMMENT #} 
 
-line con 0
-login local
-exec-timeout   {{Timeout}}  
-exit
 
-{% if tiene_puerto_auxiliar %}
+no access-list 52
 
-{% if modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+access-list 52 remark Accesos Remotos
+{% for CentroGestion in CentrosGestion %}
+access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+{% endfor %}
 
-line aux 0
-login local
-exec-timeout   {{Timeout}}   
-transport input telnet ssh
-transport output telnet ssh
-access-class 52 in
-exit
+access-list 52 permit host {{IP_PE_1}}
+access-list 52 permit host {{IP_PE_2}}
 
-{% endif %}
+{% if VLAN_Servicio_respaldo %}
+access-list 52 permit host {{IP_PE_3}}
+access-list 52 permit host {{IP_PE_4}}
 {% endif %}
 
-line vty 0 4
-login local
-exec-timeout  {{Timeout}} 
-transport input telnet ssh
-transport output telnet ssh
-access-class 52 in
-exit
 
-line vty 5 15
-transport input none
-transport output none
-exit
+{% for IP_LAN_EDC in IPs_LAN_EDC  %}
+access-list 52 permit host  {{IP_LAN_EDC}} 
+{% endfor %}
 
-{% if modelo_equipo == "Familia ISR1100" or modelo_equipo == "Familia ISR4000" %}
-line 2
-transport input none
-exit
-{% endif  %}
+access-list 52 deny any
 
 no ip http server
 no ip http secure-server
