@@ -1,19 +1,10 @@
 {# THIS IS A COMMENT #} 
 
-
-
 access-list 52 remark Accesos Remotos
 {% for CentroGestion in CentrosGestion %}
 access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
 {% endfor %}
-
-access-list 52 permit host {{IP_PE_1}}
-access-list 52 permit host {{IP_PE_2}}
-
-{% if VLAN_Servicio_respaldo %}
-access-list 52 permit host {{IP_PE_3}}
-access-list 52 permit host {{IP_PE_4}}
-{% endif %}
-
+access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
 access-list 52 deny any
+
 
