@@ -21,4 +21,9 @@ snmp-server contact  {{Persona_de_Contacto}}
 snmp-server community  {{Comunidad_SNMP_Lectura}}  RO 50
 snmp-server community  {{Comunidad_SNMP_Escritura}}  RW 51
 
+{% if modelo_equipo == "Cisco C9200L" or modelo_equipo == "Cisco C9300L" %}
+snmp-server file-transfer access-group 51 protocol tftp
+{% endif %}
+snmp-server tftp-server-list 51
+
 snmp-server ifindex persist
