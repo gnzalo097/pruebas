@@ -2,5 +2,30 @@
 
 modelo_equipo: "Cisco C1000"
 
-# Ejecutar el comando si las lineas ISDN asociadas a los BRI no forman parte de un grupo ISPBX
-Ejecutar_Comando: false 
+
+
+Password_Enable: pass_enable
+Usuario: admin
+Password_Usuario: admin
+Mnemonico_EDC: EDC-153
+
+CentrosGestion:
+  - CentroGestion_1:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_2:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_3:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+- IP_PE_1: 1.1.1.1
+- IP_PE_2: 2.2.2.2
+
+- VLAN_Servicio_respaldo: true
+
+- IP_PE_3: 3.3.3.3
+- IP_PE_4: 4.4.4.4
