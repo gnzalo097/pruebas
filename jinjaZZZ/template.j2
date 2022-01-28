@@ -1,29 +1,9 @@
 {# THIS IS A COMMENT #} 
 
-
-no access-list 52
-
-access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion %}
-access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
-{% endfor %}
-
-access-list 52 permit host {{IP_PE_1}}
-access-list 52 permit host {{IP_PE_2}}
-
-{% if VLAN_Servicio_respaldo %}
-access-list 52 permit host {{IP_PE_3}}
-access-list 52 permit host {{IP_PE_4}}
-{% endif %}
-
-
-{% for IP_LAN_EDC in IPs_LAN_EDC  %}
-access-list 52 permit host  {{IP_LAN_EDC.IP}} 
-{% endfor %}
-
-access-list 52 deny any
-
-no ip http server
-no ip http secure-server
-
+logging buffered  {{Tamano_Buffer}}  debugging
+no logging console
+logging facility  {{Local_x}} 
+logging  {{IPServidorSyslog}} 
+logging trap informational
+logging rate-limit console 10 except errors
 
