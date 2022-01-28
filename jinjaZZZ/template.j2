@@ -3,7 +3,7 @@
 aaa new-model
 no tacacs-server directed-request
 
-{% for servidor in servidores_TACACS+ %}
+{% for servidor in servidores_TACACS %}
 tacacs server TACACS+_{{loop.index}} 
 address ipv4  {{servidor.IP_Servidor}} 
 key  {{servidor.CLAVE_Servidor}} 
