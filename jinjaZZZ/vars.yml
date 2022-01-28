@@ -1,16 +1,16 @@
 ---
   - modelo_equipo: Catalyst_2000
 
-  - servidores_TACACS:
-    servidorTACACS_1:
+  servidores_TACACS:
+    - servidorTACACS_1:
       IP_Servidor: 170.1.1.1
       CLAVE_Servidor: miclave-aaa
 
-    servidorTACACS_2:
+    - servidorTACACS_2:
       IP_Servidor: 170.2.2.2
       CLAVE_Servidor: miclave-aaa
 
-    servidorTACACS_3:
+    - servidorTACACS_3:
       IP_Servidor: 170.3.3.3
       CLAVE_Servidor: miclave-aaa
     
