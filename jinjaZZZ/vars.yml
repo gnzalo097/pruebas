@@ -6,15 +6,15 @@
 servidores_SNMP:
   - servidor_SNMP_1:
     CentroGestion: 170.1.1.1
-    MascaraInversa: 
+    MascaraInversa: 255.255.255.0
 
   - servidor_SNMP_2:
       CentroGestion: 170.1.1.1
-      MascaraInversa: 
+      MascaraInversa: 255.255.255.0
 
   - servidor_SNMP_3:
       CentroGestion: 170.1.1.1
-      MascaraInversa: 
+      MascaraInversa: 255.255.255.0
     
 - Localizacion_EDC:
 - Mnemonico_EDC: [se puede coger de arriba]
