@@ -1,5 +1,5 @@
 ---
 
-modelo_equipo: "Cisco ASR903"
+modelo_equipo: "Cisco"
 
 Ejecutar_Comando: true # Ejecutar el comando si las lineas ISDN asociadas a los BRI no forman parte de un grupo ISPBX
