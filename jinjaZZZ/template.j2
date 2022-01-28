@@ -18,7 +18,7 @@ access-list 52 permit host {{IP_PE_4}}
 
 
 {% for IP_LAN_EDC in IPs_LAN_EDC  %}
-access-list 52 permit host  {{IP_LAN_EDC}} 
+access-list 52 permit host  {{IP_LAN_EDC.IP}} 
 {% endfor %}
 
 access-list 52 deny any
