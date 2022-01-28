@@ -2,33 +2,7 @@
 
 modelo_equipo: "Familia ISR4000"
 
-CentrosGestion:
-  - CentroGestion_1:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-  - CentroGestion_2:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-  - CentroGestion_3:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-IP_PE_1: 1.1.1.1
-IP_PE_2: 2.2.2.2
-
-VLAN_Servicio_respaldo: true
-
-IP_PE_3: 3.3.3.3
-IP_PE_4: 4.4.4.4
-
-
-IPs_LAN_EDC:
-  - IP_LAN_EDC_1: 
-    IP: 7.7.7.7
-  - IP_LAN_EDC_2: 
-    IP: 8.8.8.8
-  - IP_LAN_EDC_3: 
-    IP: 9.9.9.9.
+Tamano_Buffer: 100000
+Local_x: 5
+IPServidorSyslog: 5.5.5.5
 
