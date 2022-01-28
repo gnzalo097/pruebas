@@ -1,10 +1,45 @@
 {# THIS IS A COMMENT #} 
 
-access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion %}
-access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
-{% endfor %}
-access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
-access-list 52 deny any
+line con 0
+login local
+exec-timeout   {{Timeout}}  
+exit
+
+{% if tiene_puerto_auxiliar %}
+
+{% if modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+
+line aux 0
+login local
+exec-timeout   {{Timeout}}   
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+{% endif %}
+{% endif %}
+
+line vty 0 4
+login local
+exec-timeout  {{Timeout}} 
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+line vty 5 15
+transport input none
+transport output none
+exit
+
+{% if modelo_equipo == "ISR1100" or modelo_equipo == "ISR4000" %}
+line 2
+transport input none
+exit
+{% endif  %}
+
+no ip http server
+no ip http secure-server
 
 
