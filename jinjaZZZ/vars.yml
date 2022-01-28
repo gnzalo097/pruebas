@@ -1,6 +1,6 @@
 ---
 
-modelo_equipo: "Cisco C9200L"
+modelo_equipo: "Cisco"
 
 configurar_SNMP_LECTURA: true
 configurar_SNMP_LECTURA_ESCRITURA: true
