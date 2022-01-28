@@ -5,3 +5,10 @@ access-list 50 remark Gestion SNMP lectura
 access-list 50 permit host  {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
 {% endfor %}
 access-list 50 deny any
+
+
+access-list 51 remark Gestion SNMP escritura 
+{% for servidor_SNMP in servidores_SNMP %}
+access-list 51 permit {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
+{% endfor %}
+access-list 51 deny any
