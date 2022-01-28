@@ -25,7 +25,10 @@ IP_PE_4: 4.4.4.4
 
 
 IPs_LAN_EDC:
-  - IP_LAN_EDC_1: 7.7.7.7
-  - IP_LAN_EDC_2: 8.8.8.8
-  - IP_LAN_EDC_3: 9.9.9.9
+  - IP_LAN_EDC_1: 
+    IP: 7.7.7.7
+  - IP_LAN_EDC_2: 
+    IP: 8.8.8.8
+  - IP_LAN_EDC_3: 
+    IP: 9.9.9.9.
 
