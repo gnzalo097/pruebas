@@ -22,10 +22,10 @@ CentrosGestion:
     IP_CentroGestion: 170.1.1.1
     MascaraInversa: 255.255.255.0
 
-- IP_PE_1: 1.1.1.1
-- IP_PE_2: 2.2.2.2
+IP_PE_1: 1.1.1.1
+IP_PE_2: 2.2.2.2
 
-- VLAN_Servicio_respaldo: true
+VLAN_Servicio_respaldo: true
 
-- IP_PE_3: 3.3.3.3
-- IP_PE_4: 4.4.4.4
+IP_PE_3: 3.3.3.3
+IP_PE_4: 4.4.4.4
