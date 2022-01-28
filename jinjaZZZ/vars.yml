@@ -2,24 +2,4 @@
 
 modelo_equipo: "Cisco ASR903"
 
-configurar_SNMP_LECTURA: true
-configurar_SNMP_LECTURA_ESCRITURA: true
-
-servidores_SNMP:
-  - servidor_SNMP_1:
-    CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-  - servidor_SNMP_2:
-    CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-  - servidor_SNMP_3:
-    CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-    
-Localizacion_EDC: bastidor3
-Mnemonico_EDC: EDC-153
-Persona_de_Contacto: Manel
-Comunidad_SNMP_Lectura: comunity_read
-Comunidad_SNMP_Escritura: comunity_write
+Ejecutar_Comando: true # Ejecutar el comando si las lineas ISDN asociadas a los BRI no forman parte de un grupo ISPBX
