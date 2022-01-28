@@ -17,7 +17,7 @@ no service tcp-small-servers
 no service udp-small-servers 
 no service finger
 no service dhcp
-{% if modelo_equipo != "Catalyst_1000" and "Catalyst_2000" and "Catalyst_3000" %}
+{% if modelo_equipo != "Catalyst_1000" and modelo_equipo != "Catalyst_2000" and modelo_equipo != "Catalyst_3000" %}
 no ip source-route
 {% endif %}
 no ip domain-lookup
