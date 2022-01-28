@@ -12,3 +12,13 @@ access-list 51 remark Gestion SNMP escritura
 access-list 51 permit {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
 {% endfor %}
 access-list 51 deny any
+
+
+snmp-server location  {{Localizacion_EDC}} 
+snmp-server chassis-id  {{Mnemonico_EDC}} 
+snmp-server contact  {{Persona_de_Contacto}} 
+
+snmp-server community  {{Comunidad_SNMP_Lectura}}  RO 50
+snmp-server community  {{Comunidad_SNMP_Escritura}}  RW 51
+
+snmp-server ifindex persist
