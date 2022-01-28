@@ -1,7 +1,7 @@
 ---
 
 
-servidores_TACACS+:
+servidores_TACACS:
   - servidorTACACS+_1:
     IP_Servidor: 170.1.1.1
     CLAVE_Servidor: miclave-aaa
