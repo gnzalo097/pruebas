@@ -2,18 +2,6 @@
 
 modelo_equipo: "Cisco C1000"
 
-CentrosGestion:
-  - CentroGestion_1:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
+Timeout: 600
 
-  - CentroGestion_2:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-  - CentroGestion_3:
-    IP_CentroGestion: 170.1.1.1
-    MascaraInversa: 255.255.255.0
-
-Red_VLAN_Gestion: 1.1.1.1
-MascaraInversa_VLAN_Gestion: 255.255.255.0
+tiene_puerto_auxiliar: true
