@@ -1,6 +1,6 @@
 ---
 
-modelo_equipo: "Cisco"
+modelo_equipo: "Cisco C1000"
 
 configurar_SNMP_LECTURA: true
 configurar_SNMP_LECTURA_ESCRITURA: true
