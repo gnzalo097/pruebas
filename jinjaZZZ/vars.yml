@@ -1,15 +1,16 @@
 ---
 
+
 servidores_TACACS:
   - servidorTACACS+_1:
-      IP_Servidor: 170.1.1.1
-      CLAVE_Servidor: miclave-aaa
+    IP_Servidor: 170.1.1.1
+    CLAVE_Servidor: miclave-aaa
 
   - servidorTACACS+_2:
-      IP_Servidor: 170.2.2.2
-      CLAVE_Servidor: miclave-aaa
+    IP_Servidor: 170.2.2.2
+    CLAVE_Servidor: miclave-aaa
 
   - servidorTACACS+_3:
-      IP_Servidor: 170.3.3.3
-      CLAVE_Servidor: miclave-aaa
+    IP_Servidor: 170.3.3.3
+    CLAVE_Servidor: miclave-aaa
     
