@@ -1,6 +1,6 @@
 ---
 
-modelo_equipo: "Cisco C1000"
+modelo_equipo: "Cisco ASR903"
 
 Timeout: 600
 
