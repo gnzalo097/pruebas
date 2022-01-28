@@ -2,8 +2,8 @@
 
 modelo_equipo: "Cisco C9200L"
 
-SNMP_LECTURA: true
-SNMP_LECTURA_ESCRITURA: false
+configurar_SNMP_LECTURA: true
+configurar_SNMP_LECTURA_ESCRITURA: true
 
 servidores_SNMP:
   - servidor_SNMP_1:
@@ -18,8 +18,8 @@ servidores_SNMP:
     CentroGestion: 170.1.1.1
     MascaraInversa: 255.255.255.0
     
-Localizacion_EDC:
-Mnemonico_EDC: [se puede coger de arriba]
-Persona_de_Contacto:
-Comunidad_SNMP_Lectura:
-Comunidad_SNMP_Escritura:
+Localizacion_EDC: bastidor3
+Mnemonico_EDC: EDC-153
+Persona_de_Contacto: Manel
+Comunidad_SNMP_Lectura: comunity_read
+Comunidad_SNMP_Escritura: comunity_write
