@@ -1,12 +1,17 @@
 {# THIS IS A COMMENT #} 
 
-{% for servidor in servidores_TACACS %}
-tacacs-server host  {{servidor.IP_Servidor}}  key  {{servidor.CLAVE_Servidor}} 
+{% for servidor_NTP in servidores_NTP %}
+{% if loop.first  %}
+ntp server  {{servidor_NTP.IPServidor}}  prefer
+{% else %}
+ntp server  {{servidor_NTP.IPServidor}}
+{% endif %}
 {% endfor %}
 
-aaa group server tacacs+ TACACS+CG
+access-list 53 remark Gestion NTP
 
-{% for servidor in servidores_TACACS %}
-server  {{servidor.IP_Servidor}} 
+{% for servidor_NTP in servidores_NTP %}
+access-list 53 permit host  {{servidor_NTP.IPServidor}} 
 {% endfor %}
-exit
+access-list 53 deny any
+ntp access-group peer 53
