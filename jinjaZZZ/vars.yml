@@ -2,13 +2,6 @@
 
 modelo_equipo: "Cisco C1000"
 
-
-
-Password_Enable: pass_enable
-Usuario: admin
-Password_Usuario: admin
-Mnemonico_EDC: EDC-153
-
 CentrosGestion:
   - CentroGestion_1:
     IP_CentroGestion: 170.1.1.1
@@ -22,10 +15,5 @@ CentrosGestion:
     IP_CentroGestion: 170.1.1.1
     MascaraInversa: 255.255.255.0
 
-IP_PE_1: 1.1.1.1
-IP_PE_2: 2.2.2.2
-
-VLAN_Servicio_respaldo: false
-
-IP_PE_3: 3.3.3.3
-IP_PE_4: 4.4.4.4
+Red_VLAN_Gestion: 1.1.1.1
+MascaraInversa_VLAN_Gestion: 255.255.255.0
