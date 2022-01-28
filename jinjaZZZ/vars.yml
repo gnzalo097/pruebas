@@ -1,13 +1,24 @@
 ---
 
+- SNMP_LECTURA: true
+- SNMP_LECTURA_ESCRITURA: false
 
-servidores_NTP:
-  - servidorNTP_1:
-    IPServidor: 170.1.1.1
+servidores_SNMP:
+  - servidor_SNMP_1:
+    CentroGestion: 170.1.1.1
+    MascaraInversa: 
 
-  - servidorNTP_2:
-    IPServidor: 170.2.2.2
+  - servidor_SNMP_2:
+      CentroGestion: 170.1.1.1
+      MascaraInversa: 
 
-  - servidorNTP_3:
-    IPServidor: 170.2.2.2
+  - servidor_SNMP_3:
+      CentroGestion: 170.1.1.1
+      MascaraInversa: 
     
+- Localizacion_EDC:
+- Mnemonico_EDC: [se puede coger de arriba]
+- Persona_de_Contacto:
+
+- Comunidad_SNMP_Lectura:
+- Comunidad_SNMP_Escritura:
