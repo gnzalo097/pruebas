@@ -1,7 +1,7 @@
 ---
 
-- SNMP_LECTURA: true
-- SNMP_LECTURA_ESCRITURA: false
+SNMP_LECTURA: true
+SNMP_LECTURA_ESCRITURA: false
 
 servidores_SNMP:
   - servidor_SNMP_1:
@@ -16,9 +16,8 @@ servidores_SNMP:
       CentroGestion: 170.1.1.1
       MascaraInversa: 255.255.255.0
     
-- Localizacion_EDC:
-- Mnemonico_EDC: [se puede coger de arriba]
-- Persona_de_Contacto:
-
-- Comunidad_SNMP_Lectura:
-- Comunidad_SNMP_Escritura:
+Localizacion_EDC:
+Mnemonico_EDC: [se puede coger de arriba]
+Persona_de_Contacto:
+Comunidad_SNMP_Lectura:
+Comunidad_SNMP_Escritura:
