@@ -2,15 +2,12 @@
 
 aaa new-model
 no tacacs-server directed-request
-
 {% for servidor in servidores_TACACS %}
 tacacs server TACACS+_{{loop.index}} 
 address ipv4  {{servidor.IP_Servidor}} 
 key  {{servidor.CLAVE_Servidor}} 
 exit
 {% endfor %}
-
-
 aaa group server tacacs+ TACACS+CG
 {% for servidor in servidores_TACACS %}
 server name TACACS+_{{loop.index}} 
