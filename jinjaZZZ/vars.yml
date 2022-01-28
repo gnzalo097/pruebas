@@ -3,4 +3,4 @@
 modelo_equipo: "Cisco C1000"
 
 # Ejecutar el comando si las lineas ISDN asociadas a los BRI no forman parte de un grupo ISPBX
-Ejecutar_Comando: true 
+Ejecutar_Comando: false 
