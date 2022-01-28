@@ -1,12 +1,13 @@
 {# THIS IS A COMMENT #} 
 
 
+
 snmp-server enable traps
 no snmp-server enable traps snmp authentication
 no snmp-server enable traps syslog
 
 {% if Ejecutar_Comando %}
-no snmp-server enable traps isdn			
+no snmp-server enable traps isdn
 snmp-server enable traps isdn call-information
 {% endif %}
 
