@@ -1,9 +1,8 @@
 {# THIS IS A COMMENT #} 
 
-logging buffered  {{Tamano_Buffer}}  debugging
-no logging console
-logging facility  {{Local_x}} 
-logging  {{IPServidorSyslog}} 
-logging trap informational
-logging rate-limit console 10 except errors
+{% if version_IOS | version_compare('10.9.8', '<') %}
+haces A
+{% else %}
+haces B
+{% endif %}
 
