@@ -1,8 +1,17 @@
 {# THIS IS A COMMENT #} 
 
-{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
-show snmp mib ifmib ifindex 
-{% else %}
-/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO}} {{IP_Gestion}} ifDescr
+banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
+banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
+
+clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+
+{% if localizacion_canarias == false %}
+clock timezone MET 1
 {% endif %}
+
+clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00
+
+
+hostname {{ Mnemonico_EDC }}
+
 
