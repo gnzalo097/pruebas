@@ -1,12 +1,8 @@
 {# THIS IS A COMMENT #} 
 
-{% if version_IOS.split('.') | map('int') | list >= [15, 9, 8]  %}
-
-haces A
-
+{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
+show snmp mib ifmib ifindex 
 {% else %}
-
-haces B
-
+/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO}} {{IP_Gestion}} ifDescr
 {% endif %}
 
