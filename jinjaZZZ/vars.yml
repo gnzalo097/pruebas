@@ -2,8 +2,15 @@
 
 modelo_equipo: "Familia ISR4000"
 
-version_IOS: 12.2.2.0.5
+Mnemonico_equipo: EDC-150
 
-SNMP_RO: null
-IP_Gestion: null
-
+  # banner:
+  - Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
+  - Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
+ 
+  # fecha_y_hora# 
+  - hora_minuto_segundo: "22:00:00"
+  - dia: 3
+  - mes: dicember
+  - ano: 2022
+  - localizacion_canarias: false
