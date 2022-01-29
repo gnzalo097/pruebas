@@ -1,8 +1,12 @@
 {# THIS IS A COMMENT #} 
 
-{% if version_IOS | version('10.9.8', '<') %}
+{% if version_IOS.split('.') | map('int') | list >= [10, 9, 8]  %}
+
 haces A
+
 {% else %}
+
 haces B
+
 {% endif %}
 
