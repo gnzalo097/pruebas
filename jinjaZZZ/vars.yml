@@ -2,7 +2,7 @@
 
 modelo_equipo: "Familia ISR4000"
 
-version_IOS: 12.2.0.0.5
+version_IOS: 12.2.2.0.5
 
 SNMP_RO: null
 IP_Gestion: null
