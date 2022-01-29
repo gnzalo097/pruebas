@@ -1,0 +1,316 @@
+
+parametros:
+
+  - escenario:
+      modelo_equipo:
+      fabricante_equipo:
+      version_IOS_equipo:
+
+      servicio:
+      escenario:
+
+      numero de EDC: {EDC Simple} {dos o más EDCs}
+      servicio: {MacroLAN, VPNIP y DataInternet} {Servicios SiLAN e Ibercom Punto Central}
+      
+
+      traps_snmp: {MacroLAN} {VPNIP} {DataInternet} {SiLAN e Ibercom IP Punto Central}
+
+      Configuración de RMON: {MacroLAN, VPNIP y DataInternet} {variables MIB de unica instancia} {variables MIB de varias instancias} {SiLAN} {Ibercom IP Punto Central}
+
+
+  - modelo_equipo: Cisco C1000
+
+  - modelos_soportados:
+    - Cisco 892FSP
+    - Familia ISR1100
+    - Familia ISR4000
+    - Cisco ASR1001-X
+    - Cisco ASR1009-X
+    - Cisco ASR920
+    - Cisco ASR903
+    - Cisco C9200L
+    - Cisco C9300L
+    - Cisco C1000
+
+# ------- CONFIGURACIONES COMUNES
+
+  # banner:
+  - Texto_Banner_Pre_Autenticacion: -------- ESTO ES UN BANNER PRE AUTENTICACION ---------
+  - Texto_Banner_Post_Autenticacion: -------- ESTO ES UN BANNER POST AUTENTICACION ---------
+ 
+  # fecha_y_hora# 
+  - hora_minuto_segundo: "22:00:00"
+  - dia: 3
+  - mes: dicember
+  - ano: 2022
+  - localizacion_canarias: false
+
+  # nombre_del_equipo:
+  - Mnemonico_EDC: EDC-150
+
+  # gestion_por_loopback:
+  - IPGestion: 192.168.1.1
+
+
+
+--- EDC SIMPLE
+
+Password_Enable: pass_enable
+
+Usuario: admin
+Password_Usuario: admin
+
+Mnemonico_EDC: EDC-153
+
+  --- MacroLAN, VPNIP y DataInternet
+
+CentrosGestion:
+  - CentroGestion_1:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_2:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_3:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+IP_PE_1: 1.1.1.1
+IP_PE_2: 2.2.2.2
+
+VLAN_Servicio_respaldo: true
+
+IP_PE_3: 3.3.3.3
+IP_PE_4: 4.4.4.4
+
+
+  --- SiLAN e Ibercom Punto Central
+
+CentrosGestion:
+  - CentroGestion_1:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_2:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - CentroGestion_3:
+    IP_CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+Red_VLAN_Gestion: 1.1.1.1
+MascaraInversa_VLAN_Gestion: 255.255.255.0
+
+  --- Configuracion Extra
+
+Timeout: 600
+
+tiene_puerto_auxiliar: true
+
+
+--- EDC DOBLE
+
+IPs_LAN_EDC:
+  - IP_LAN_EDC_1: 
+    IP: 7.7.7.7
+  - IP_LAN_EDC_2: 
+    IP: 8.8.8.8
+  - IP_LAN_EDC_3: 
+    IP: 9.9.9.9
+
+--- SERVIDORES TACACS
+
+servidores_TACACS:
+  - servidorTACACS+_1:
+    IP_Servidor: 170.1.1.1
+    CLAVE_Servidor: miclave-aaa
+
+  - servidorTACACS+_2:
+    IP_Servidor: 170.2.2.2
+    CLAVE_Servidor: miclave-aaa
+
+  - servidorTACACS+_3:
+    IP_Servidor: 170.3.3.3
+    CLAVE_Servidor: miclave-aaa
+    
+
+--- SERVIDORES NTP
+
+servidores_NTP:
+  - servidorNTP_1:
+    IPServidor: 170.1.1.1
+
+  - servidorNTP_2:
+    IPServidor: 170.2.2.2
+
+  - servidorNTP_3:
+    IPServidor: 170.2.2.2
+
+
+
+--- SERVIDORES SNMP
+
+configurar_SNMP_LECTURA: true
+configurar_SNMP_LECTURA_ESCRITURA: true
+
+servidores_SNMP:
+  - servidor_SNMP_1:
+    CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - servidor_SNMP_2:
+    CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+
+  - servidor_SNMP_3:
+    CentroGestion: 170.1.1.1
+    MascaraInversa: 255.255.255.0
+    
+Localizacion_EDC: bastidor3
+Mnemonico_EDC: EDC-153
+Persona_de_Contacto: Manel
+Comunidad_SNMP_Lectura: comunity_read
+Comunidad_SNMP_Escritura: comunity_write
+
+
+--- Activacion de traps SNMP
+
+Ejecutar_Comando: true # Ejecutar el comando si las lineas ISDN asociadas a los BRI no forman parte de un grupo ISPBX
+
+
+--- Configuracion de RMON
+
+
+A - MacroLAN, VPNIP y DataInternet
+
+Comunidad_Lectura: community
+
+B - MacroLAN, VPNIP y DataInternet
+
+Comunidad_Lectura: community
+
+monitorizacion_variables_MIB:
+ - alarma_1:
+   codigo_alarma: 52000
+   instancia: 5
+   Y: 60
+   Z: 200
+   Z1: 100
+
+ - alarma_2:
+   codigo_alarma: 54000
+   instancia: 
+   Y: 60
+   Z: 200
+   Z1: 100
+
+ - alarma_3:
+   codigo_alarma: 56000
+   instancia: 5
+   Y: 60
+   Z: 200
+   Z1: 100
+
+ - alarma_4:
+   codigo_alarma: 58000
+   instancia: 5
+   Y: 60
+   Z: 200
+   Z1: 100
+  
+ - alarma_5:
+   codigo_alarma: 62000
+   instancia: 5
+   Y: 60
+   Z: 200
+   Z1: 100
+
+
+version_IOS: 13.0.0
+
+SNMP_RO: null
+IP_Gestion: null
+
+- SILAN
+
+Comunidad_Lectura: community
+
+- Ibercom IP Punto Central
+
+Comunidad_Lectura: 
+X:
+
+version_IOS: 13.0.0
+SNMP_RO: null
+IP_Gestion: null
+
+
+--- Configuracion de Syslog
+
+Tamano_Buffer: 100000
+Local_x: 5
+IPServidorSyslog: 5.5.5.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+output:
+  - mode: fabricante1
+
+networks:
+  - name: network_1
+    prefix: 10.0.0.0/24
+    services:
+      - computing
+
+  - name: network_2
+    prefix: 20.0.0.0/24
+    services:
+      - facilities
+      - EDC
+
+
+services:
+  computing:
+    - {ip: 10.90.0.5/32, prot: tcp, port: 5008}
+    - {ip: 10.91.4.0/255.255.255.0, prot: tcp, port: 5009}
+    - {ip: 10.91.6.32/27, prot: tcp, port: 6800}
+
+  facilities:
+    - {ip: 10.90.0.5/32, prot: tcp, port: 5008}
+    - {ip: 10.91.4.0/255.255.255.0, prot: tcp, port: 5009}
+
+  EDC:
+    - {ip: 10.90.0.5/32, prot: tcp, port: 5008}
+    - {ip: 10.91.4.0/255.255.255.0, prot: tcp, port: 5009}
+

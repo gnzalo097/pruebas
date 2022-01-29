@@ -1,0 +1,696 @@
+
+----------------------------------------------------- BANNER
+
+banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
+banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
+
+----------------------------------------------------- FECHA_Y_HORA
+
+clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+
+{% if localizacion_canarias == false %}
+clock timezone MET 1
+{% endif %}
+
+clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00
+
+----------------------------------------------------- HOSTNAME
+
+hostname {{ Mnemonico_EDC }}
+
+----------------------------------------------------- Desactivacion de servicios no necesarios
+
+no cdp run
+no service tcp-small-servers 
+no service udp-small-servers 
+no service finger
+no service dhcp
+{% if modelo_equipo != "Cisco C1000"  %}
+no ip source-route             
+{% endif %}
+no ip domain-lookup
+no service config
+no ip bootp server {% TIME_OUT %} si da error en algunos modelos no pasa nada
+no ip name-server
+
+
+service nagle
+service tcp-keepalives-in
+ip subnet-zero
+service timestamps debug datetime localtime msec show-timezone
+service timestamps log datetime localtime msec show-timezone
+
+
+----------------------------------------------------- GESTION POR LOOPBACK
+
+interface loopback 600
+description Direccion IP de gestion EDC
+ip address {{IPGestion}} 255.255.255.255
+no ip directed-broadcast
+no ip proxy-arp
+no shutdown
+exit
+
+ip tftp source-interface Loopback 600
+ip ftp source-interface Loopback 600
+ip tacacs source-interface Loopback 600
+logging source-interface Loopback 600
+snmp-server trap-source Loopback 600
+ntp source Loopback 600
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------- EDC SIMPLE
+
+service password-encryption
+enable secret {{Password_Enable}}
+username {{Usuario}} secret {{Password_Usuario}}
+
+
+-------- EDC SIMPLE - HABILITAR SSH
+
+ip domain-name {{Mnemonico_EDC}} (Para las plataformas ASR903, ASR920, ASR1000, ISR4000 e ISR1100, ASR1009X ip domain name)
+crypto key generate rsa
+{% TIME_OUT %}
+1024
+{% TIME_OUT %}
+ip ssh version 2
+
+-------- EDC SIMPLE - HABILITAR SSH - condiciones
+
+
+{% if modelo_equipo =="Cisco ASR903" or modelo_equipo =="Cisco ASR920" or modelo_equipo =="Cisco ASR1000" or modelo_equipo =="Familia ISR4000" or modelo_equipo =="Familia ISR1100" or modelo_equipo =="Cisco ASR1009-X" %}
+ip domain name {{Mnemonico_EDC}}
+{% else %}
+ip domain-name {{Mnemonico_EDC}}
+{% endif %}
+
+crypto key generate rsa
+{% TIME_OUT %}
+1024
+{% TIME_OUT %}
+ip ssh version 2
+
+
+
+------------------------ EDC SIMPLE - filtro para controlar los accesos remotos al equipo - MacroLAN, VPNIP y DataInternet
+
+access-list 52 remark Accesos Remotos
+access-list 52 permit {{CentroGestion_1}} {{MascaraInversa_1}}
+
+access-list 52 permit {{CentroGestion_N}} {{MascaraInversa_N}}
+
+
+access-list 52 permit host {{IP_PE_1}}
+access-list 52 permit host {{IP_PE_2}}
+access-list 52 permit host {{IP_PE_3}}
+access-list 52 permit host {{IP_PE_4}}
+access-list 52 deny any
+
+------------------------ EDC SIMPLE - filtro para controlar los accesos remotos al equipo - MacroLAN, VPNIP y DataInternet - BUCLE
+
+access-list 52 remark Accesos Remotos
+{% for CentroGestion in CentrosGestion %}
+access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+{% endfor %}
+
+access-list 52 permit host {{IP_PE_1}}
+access-list 52 permit host {{IP_PE_2}}
+
+{% if VLAN_Servicio_respaldo %}
+access-list 52 permit host {{IP_PE_3}}
+access-list 52 permit host {{IP_PE_4}}
+{% endif %}
+
+access-list 52 deny any
+
+
+------------------------ EDC SIMPLE - filtro para controlar los accesos remotos al equipo - Servicios SiLAN e Ibercom Punto Central
+
+access-list 52 remark Accesos Remotos
+access-list 52 permit  {{CentroGestion_1}}  {{MascaraInversa_1}}
+
+access-list 52 permit  {{CentroGestion_N}}  {{MascaraInversa_N}}
+access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
+access-list 52 deny any
+
+
+------------------------ EDC SIMPLE - filtro para controlar los accesos remotos al equipo - Servicios SiLAN e Ibercom Punto Central - BUCLE 1
+
+access-list 52 remark Accesos Remotos
+{% for CentroGestion in CentrosGestion %}
+access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+{% endfor %}
+access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
+access-list 52 deny any
+
+
+
+------------------------ EDC SIMPLE - lista de acceso
+
+line con 0
+login local
+exec-timeout   {{Timeout}}  
+exit
+
+! Si el equipo tiene puerto AUX.(Comando NO disponible para las familias ASR903, ASR920, ISR4000, ISR1100)
+line aux 0
+login local
+exec-timeout   {{Timeout}}   
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+line vty 0 4
+login local
+exec-timeout  {{Timeout}} 
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+line vty 5 15
+transport input none
+transport output none
+exit
+
+! Si el equipo es un ISR G2 se deshabilita la “line 2”. Es posible que en versiones de IOS antiguas este comando no se soporte, en tal caso se continua con la configuración.
+line 2
+transport input none
+exit
+
+no ip http server
+no ip http secure-server
+
+------------------------ EDC SIMPLE - filtro para controlar los accesos remotos al equipo - Servicios SiLAN e Ibercom Punto Central - condiciones
+
+line con 0
+login local
+exec-timeout   {{Timeout}}  
+exit
+
+{% if tiene_puerto_auxiliar %}
+
+{% if modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+
+line aux 0
+login local
+exec-timeout   {{Timeout}}   
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+{% endif %}
+{% endif %}
+
+line vty 0 4
+login local
+exec-timeout  {{Timeout}} 
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+line vty 5 15
+transport input none
+transport output none
+exit
+
+{% if modelo_equipo == "Familia ISR1100" or modelo_equipo == "Familia ISR4000" %}
+line 2
+transport input none
+exit
+{% endif  %}
+
+no ip http server
+no ip http secure-server
+
+
+
+
+
+
+----------------------------------------------------- EDC DOBLE
+
+no access-list 52
+
+access-list 52 remark Accesos Remotos
+access-list 52 permit  {{CentroGestion_1}}   {{MascaraInversa_1}} 
+
+access-list 52 permit  {{CentroGestion_N}}   {{MascaraInversa_N}} 
+access-list 52 permit host  {{IP_PE_1}}  
+access-list 52 permit host  {{IP_PE_2}} 
+access-list 52 permit host  {{IP_PE_3}}
+access-list 52 permit host  {{IP_PE_4}}
+access-list 52 permit host  {{IP_LAN_EDC_n}} 
+access-list 52 deny any
+
+
+
+----------------------------------------------------- EDC DOBLE - BUCLE
+
+no access-list 52
+
+access-list 52 remark Accesos Remotos
+{% for CentroGestion in CentrosGestion %}
+access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+{% endfor %}
+
+access-list 52 permit host {{IP_PE_1}}
+access-list 52 permit host {{IP_PE_2}}
+
+{% if VLAN_Servicio_respaldo %}
+access-list 52 permit host {{IP_PE_3}}
+access-list 52 permit host {{IP_PE_4}}
+{% endif %}
+
+
+{% for IP_LAN_EDC in IPs_LAN_EDC  %}
+access-list 52 permit host  {{IP_LAN_EDC.IP}} 
+{% endfor %}
+
+access-list 52 deny any
+
+
+
+----------------------------------------------------- TACACS
+
+aaa new-model
+no tacacs-server directed-request
+
+tacacs server TACACS+_1
+address ipv4  {{IP_Servidor_TACACS+_1}} 
+key  {{Clave_Servidor_TACACS+_1}} 
+exit
+
+tacacs server TACACS+_ {{n}} 
+address ipv4  {{IP_Servidor_TACACS+_n}} 
+key  {{Clave_Servidor_TACACS+_n}} 
+exit
+
+aaa group server tacacs+ TACACS+CG
+server name TACACS+_1
+server name TACACS+_ {{n}} 
+exit
+
+
+
+----------------------------------------------------- TACACS - BUCLE
+
+aaa new-model
+no tacacs-server directed-request
+
+{% for servidor_TACACS in servidores_TACACS %}   {# NO SE PUEDE PONER servidores_TACACS+ CON EL MAS AL FINAL PQ SALE ERROR EN EL BUCLE #} 
+tacacs server TACACS+_{{loop.index}} 
+address ipv4  {{servidor_TACACS.IP_Servidor}} 
+key  {{servidor_TACACS.CLAVE_Servidor}} 
+exit
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+{% for servidor_TACACS in servidores_TACACS %}
+server name TACACS+_{{loop.index}} 
+{% endfor %}
+exit
+
+
+-------------------- MODELO ANTIGUO TACACS
+
+
+tacacs-server host  {{IP_Servidor_TACACS+_1}}  key  {{Clave_Servidor_TACACS+_1}} 
+tacacs-server host  {{IP_Servidor_TACACS+_n}}  key  {{Clave_Servidor_TACACS+_n}} 
+aaa group server tacacs+ TACACS+CG
+server  {{IP_Servidor_TACACS+_1}} 
+server  {{IP_Servidor_TACACS+_n}} 
+exit
+
+
+-------------------- MODELO ANTIGUO TACACS - BUCLE
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+
+{% for servidor_TACACS in servidores_TACACS %}
+server  {{servidor_TACACS.IP_Servidor}} 
+{% endfor %}
+exit
+
+
+-------------------- AUTENTICACION TACACS
+
+aaa authentication login default group TACACS+CG local
+aaa authentication enable default group TACACS+CG enable
+
+
+aaa accounting exec default start-stop group TACACS+CG
+aaa accounting commands 0 default start-stop group TACACS+CG
+aaa accounting commands 1 default start-stop group TACACS+CG
+aaa accounting commands 15 default start-stop group TACACS+CG
+
+
+{% TIME_OUT %}  volver a entrar al equipo con los nuevos credenciales
+
+
+aaa authorization exec default group TACACS+CG if-authenticated
+aaa authorization commands 0 default group TACACS+CG local
+aaa authorization commands 1 default group TACACS+CG local
+aaa authorization commands 15 default group TACACS+CG local
+
+
+----------------------------------------------------- NTP
+
+
+ntp server  {{IPServidorNTP_1}}  prefer
+ntp server  {{IPServidorNTP_n}} 
+access-list 53 remark Gestion NTP
+access-list 53 permit host  {{IPServidorNTP_1}} 
+access-list 53 permit host  {{IPServidorNTP_n}} 
+access-list 53 deny any
+ntp access-group peer 53
+
+
+----------------------------------------------------- NTP - BUCLE
+
+
+{% for servidor_NTP in servidores_NTP %}
+{% if loop.first  %}
+ntp server  {{servidor_NTP.IPServidor}}  prefer
+{% else %}
+ntp server  {{servidor_NTP.IPServidor}}
+{% endif %}
+{% endfor %}
+
+access-list 53 remark Gestion NTP
+
+{% for servidor_NTP in servidores_NTP %}
+access-list 53 permit host  {{servidor_NTP.IPServidor}} 
+{% endfor %}
+
+access-list 53 deny any
+ntp access-group peer 53
+
+
+----------------------------------------------------- SNMP LECTURA
+
+access-list 50 remark Gestion SNMP lectura 
+access-list 50 permit  {{CentroGestion_1}}   {{MascaraInversa_1}} 
+
+access-list 50 permit  {{CentroGestion_N}}   {{MascaraInversa_N}} 
+access-list 50 deny any
+
+----------------------------------------------------- SNMP LECTURA - BUCLE
+
+access-list 50 remark Gestion SNMP lectura
+{% for servidor_SNMP in servidores_SNMP %}
+access-list 50 permit host  {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
+{% endfor %}
+access-list 50 deny any
+
+----------------------------------------------------- SNMP LECTURA/ESCRITURA
+
+access-list 51 remark Gestion SNMP escritura 
+access-list 51 permit  {{CentroGestion_1}}   {{MascaraInversa_1}} 
+
+access-list 51 permit  {{CentroGestion_N}}   {{MascaraInversa_N}} 
+access-list 51 deny any
+
+----------------------------------------------------- SNMP LECTURA/ESCRITURA - BUCLE
+
+access-list 51 remark Gestion SNMP escritura 
+{% for servidor_SNMP in servidores_SNMP %}
+access-list 51 permit {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
+{% endfor %}
+access-list 51 deny any
+
+----------------------------------------------------- SNMP DATOS ADMINISTRATIVOS
+
+snmp-server location  {{Localizacion_EDC}} 
+snmp-server chassis-id  {{Mnemonico_EDC}} 
+snmp-server contact  {{Persona_de_Contacto}} 
+
+----------------------------------------------------- SNMP COMUNIDADDES LECTURA y LECTURA/ESCRITURA
+
+snmp-server community  {{Comunidad_SNMP_Lectura}}  RO 50
+snmp-server community  {{Comunidad_SNMP_Escritura}}  RW 51
+
+----------------------------------------------------- SNMP CONTROL ACCESOS TFTP
+
+snmp-server file-transfer access-group 51 protocol tftp ! Para el Catalyst 9000 series
+snmp-server tftp-server-list 51
+
+----------------------------------------------------- SNMP CONTROL ACCESOS TFTP - condiciones
+
+{% if modelo_equipo == "Cisco C9200L" or modelo_equipo == "Cisco C9300L" %}
+snmp-server file-transfer access-group 51 protocol tftp
+{% endif %}
+snmp-server tftp-server-list 51
+
+----------------------------------------------------- SNMP persistencia a los indices de los interfaces del equipo.
+
+snmp-server ifindex persist
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------- MACROLAN
+
+snmp-server enable traps
+no snmp-server enable traps snmp authentication
+no snmp-server enable traps syslog
+
+{% if Ejecutar_Comando %}
+no snmp-server enable traps isdn
+snmp-server enable traps isdn call-information
+{% endif %}
+
+
+----------------------------------------------------- VPN IP
+
+{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+snmp-server enable traps isdn call-information 
+{% endif %}
+
+snmp-server enable traps config
+snmp-server enable traps entity
+
+{% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %}
+snmp-server enable traps envmon
+{% endif %}
+
+{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+snmp-server enable traps bgp 
+snmp-server enable traps frame-relay 
+snmp-server enable traps rtr 
+{% endif %}
+
+{% if Ejecutar_Comando %}
+snmp-server enable traps isdn 
+{% endif %}
+
+snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+snmp-server enable traps atm pvc
+{% endif %}
+
+
+
+----------------------------------------------------- datainternet
+
+snmp-server enable traps config
+
+{% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+snmp-server enable traps envmon
+{% endif %}
+
+{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+snmp-server enable traps bgp 
+snmp-server enable traps rtr 
+{% endif %}
+
+snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+snmp-server enable traps atm pvc 
+{% endif %}
+
+
+
+----------------------------------------------------- SiLAN e Ibercom IP Punto Central
+
+snmp-server enable traps
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------- Configuracion de RMON
+
+
+----------- MacroLAN, VPNIP y DataInternet
+
+A --- Definicion de EVENTOS y ALARMAS RMON para variables MIB de una unica instancia
+
+rmon event 100 log trap  {{Comunidad_Lectura}}  description NUM_INTERFACES_HA_CAMBIADO owner config
+rmon event 200 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
+rmon event 201 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
+rmon event 300 log trap  {{Comunidad_Lectura}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
+rmon event 301 log trap  {{Comunidad_Lectura}}  description USO_DE_CPU_ACEPTABLE owner config
+rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+
+B --- Definicion de EVENTOS y ALARMAS RMON para variables MIB de varias instancias
+
+rmon event 52 log trap  {{Comunidad_Lectura}}  description DESCARTES_DE_ENTRADA_MAL owner config 
+rmon event 53 log trap  {{Comunidad_Lectura}}  description DESCARTES_DE_ENTRADA_BIEN owner config 
+rmon event 54 log trap  {{Comunidad_Lectura}}  description ERRORES_DE_ENTRADA_MAL owner config 
+rmon event 55 log trap  {{Comunidad_Lectura}}  description ERRORES_DE_ENTRADA_BIEN owner config 
+rmon event 56 log trap  {{Comunidad_Lectura}}  description DESCARTES_DE_SALIDA_MAL owner config 
+rmon event 57 log trap  {{Comunidad_Lectura}}  description DESCARTES_DE_SALIDA_BIEN owner config 
+rmon event 58 log trap  {{Comunidad_Lectura}}  description ERRORES_DE_SALIDA_MAL owner config 
+rmon event 59 log trap  {{Comunidad_Lectura}}  description ERRORES_DE_SALIDA_BIEN owner config 
+rmon event 62 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES owner config
+rmon event 63 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES_RECUPERADAS owner config
+rmon alarm {{codigo_alarma}} 1.3.6.1.2.1.2.2.1.13. {{instancia}}   {{Y}}  delta rising-threshold  {{Z}}  52 falling-threshold  {{Z1}}  53 owner config 
+rmon alarm {{codigo_alarma}} 1.3.6.1.2.1.2.2.1.14. {{instancia}}   {{Y}}  delta rising-threshold  {{Z}}  54 falling-threshold  {{Z1}}  55 owner config 
+rmon alarm {{codigo_alarma}} 1.3.6.1.2.1.2.2.1.19. {{instancia}}   {{Y}}  delta rising-threshold  {{Z}}  56 falling-threshold  {{Z1}}  57 owner config 
+rmon alarm {{codigo_alarma}} 1.3.6.1.2.1.2.2.1.20. {{intancia}}   {{Y}}  delta rising-threshold  {{Z}}  58 falling-threshold  {{Z1}}  59 owner config 
+rmon alarm {{codigo_alarma}} 1.3.6.1.4.1.9.2.2.1.1.25. {{instancia}}   {{Y}}  delta rising-threshold  {{Z}}  62 falling-threshold  {{Z1}}  63 owner config
+
+
+
+----------- mostrar el numero de identificacion de indice SNMP para todos los interfaces
+
+
+{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
+show snmp mib ifmib ifindex 
+{% else %}
+/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO}} {{IP_Gestion}} ifDescr
+{% endif %}
+
+
+----------- SILAN
+
+rmon event 46 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES owner config
+rmon event 47 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES_RECUPERADAS owner config
+rmon event 100 log trap  {{Comunidad_Lectura}}  description NUM_INTERFACES_HA_CAMBIADO owner config
+rmon event 200 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
+rmon event 201 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
+rmon event 300 log trap  {{Comunidad_Lectura}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
+rmon event 301 log trap  {{Comunidad_Lectura}}  description USO_DE_CPU_ACEPTABLE owner config
+rmon alarm 100 ifNumber.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+rmon alarm 46001 lifEntry.25.10001 900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
+
+
+----------- Ibercom IP Punto Central
+
+rmon event 46 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES owner config
+rmon event 47 log trap  {{Comunidad_Lectura}}  description ERRORES_COLISIONES_RECUPERADAS owner config
+rmon event 100 log trap  {{Comunidad_Lectura}}  description NUM_INTERFACES_HA_CAMBIADO owner config
+rmon event 200 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
+rmon event 201 log trap  {{Comunidad_Lectura}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
+rmon event 300 log trap  {{Comunidad_Lectura}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
+rmon event 301 log trap  {{Comunidad_Lectura}}  description USO_DE_CPU_ACEPTABLE owner config
+rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+rmon alarm 46001 1.3.6.1.4.1.9.2.2.1.1.25. {{X}}  900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
+
+
+
+
+----------- mostrar el numero de identificacion de indice SNMP para todos los interfaces
+
+
+{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
+show snmp mib ifmib ifindex 
+{% else %}
+/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO}} {{IP_Gestion}} ifDescr
+{% endif %}
+
+
+----------------------------------------------------- Configuracion de SYSLOG
+
+logging buffered  {{Tamano_Buffer}}  debugging
+no logging console
+logging facility  {{Local_x}} 
+logging  {{IPServidorSyslog}} 
+logging trap informational
+logging rate-limit console 10 except errors
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
