@@ -2,7 +2,4 @@
 
 modelo_equipo: "Familia ISR4000"
 
-Tamano_Buffer: 100000
-Local_x: 5
-IPServidorSyslog: 5.5.5.5
-
+version_IOS: 10.0.0
