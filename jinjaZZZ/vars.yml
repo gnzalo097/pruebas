@@ -150,6 +150,7 @@ servidores_NTP:
     IPServidor: 170.2.2.2
 
 
+
 # ------- DATOS CONFIGURACION SERVIDORES SNMP
 
 configurar_SNMP_LECTURA: true
@@ -186,11 +187,11 @@ Ejecutar_Comando: true
 
 ######  A - MacroLAN, VPNIP y DataInternet
 
-Comunidad_Lectura: community
+Comunidad_Lectura_1: community
 
 ######  B - MacroLAN, VPNIP y DataInternet
 
-Comunidad_Lectura: community
+Comunidad_Lectura_2: community
 
 monitorizacion_variables_MIB:
  - alarma_1:
@@ -230,8 +231,8 @@ monitorizacion_variables_MIB:
 
 # version_IOS: DATOS GENERALES
 
-SNMP_RO: null
-IP_Gestion: null
+SNMP_RO_1: null
+IP_Gestion_1: null
 
 ######  SILAN
 
@@ -243,8 +244,8 @@ Comunidad_Lectura: community
 X: aaa
 
 version_IOS: 13.0.0
-SNMP_RO: null
-IP_Gestion: null
+SNMP_RO_2: null
+IP_Gestion_2: null
 
 
 # ------- DATOS Configuracion de Syslog
@@ -252,3 +253,5 @@ IP_Gestion: null
 Tamano_Buffer: 100000
 Local_x: 5
 IPServidorSyslog: 5.5.5.5
+
+
