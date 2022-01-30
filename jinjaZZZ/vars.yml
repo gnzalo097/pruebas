@@ -236,11 +236,11 @@ IP_Gestion_1: null
 
 ######  SILAN
 
-Comunidad_Lectura: community
+Comunidad_Lectura_3: community
 
 ######  Ibercom IP Punto Central
 
-Comunidad_Lectura: community
+Comunidad_Lectura_4: community
 X: aaa
 
 version_IOS: 13.0.0
@@ -253,5 +253,4 @@ IP_Gestion_2: null
 Tamano_Buffer: 100000
 Local_x: 5
 IPServidorSyslog: 5.5.5.5
-
 
