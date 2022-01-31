@@ -1,10 +1,13 @@
-
 {% if modelo_equipo not in modelos_soportados %}
 {{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
 {% endif %}
 
+{% if servicio not in servicios_soportados %}
+{{ ' -- EL SERVICIO NO ESTA DENTRO DE LOS SERVICIOS SOPORTADOS -- ' | center }}
+{% endif %}
 
-{# ------------ CoNFIGURACIoNES COMUNES ------------ -#}
+{# ------------ CONFIGURACIONES COMUNES ------------ -#}
+{{"------------ CONFIGURACIONES COMUNES ------------" | center }}
 
 {# BANNER -#} 
 
@@ -45,7 +48,7 @@ ip subnet-zero
 service timestamps debug datetime localtime msec show-timezone
 service timestamps log datetime localtime msec show-timezone
 
-{# GESTION PoR LOOPBACK -#} 
+{# GESTION POR LOOPBACK -#} 
 
 interface loopback 600
 description Direccion IP de gestion EDC
@@ -64,9 +67,10 @@ ntp source Loopback 600
 
 
 
-{# ------------------------ CoNTROL DE ACCESO AL EDC ------------------------ -#}
+{# ------------------------ CONTROL DE ACCESO AL EDC ------------------------ -#}
+{{"------------------------ CONTROL DE ACCESO AL EDC ------------------------" | center }}
 
-{# ------------ ESCENARIOS CoN EDC SIMPLE ------------ -#}
+{# ------------ ESCENARIOS CON EDC SIMPLE ------------ -#}
 
 
 {# Activacion del servicio de encriptado de passwords -#} 
@@ -206,6 +210,7 @@ no ip http secure-server
 {% endif  %}
 
 {# ------------------------ Configuracion TACACS+ ------------------------ -#}
+{{"------------------------ Configuracion TACACS+ ------------------------" | center }}
 
 {#  Creacion de un nuevo modelo de AAA -#} 
 
@@ -227,7 +232,7 @@ server name TACACS+_{{loop.index}}
 {% endfor %}
 exit
 
-{#  MoDELO ANTIGUO TACACS+ -#} 
+{#  MODELO ANTIGUO TACACS+ -#} 
 
 {% for servidor_TACACS in servidores_TACACS %}
 tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
@@ -265,6 +270,7 @@ aaa authorization commands 15 default group TACACS+CG local
 
 
 {# ------------------------ Configuracion NTP  ------------------------ -#}
+{{"------------------------ Configuracion NTP  ------------------------" | center }}
 
 {% for servidor_NTP in servidores_NTP %}
 {% if loop.first  %}
@@ -285,6 +291,8 @@ ntp access-group peer 53
 
 
 {# ------------------------ Configuracion SNMP ------------------------ -#}
+{{"------------------------ Configuracion SNMP ------------------------" | center }}
+
 
 {#  Filtro para controlar los accesos de lectura SNMP -#} 
 
@@ -327,6 +335,7 @@ snmp-server ifindex persist
 
 
 {# ------------------------ Activacion de traps SNMP ------------------------ -#}
+{{"------------------------ Activacion de traps SNMP ------------------------" | center }}
 
 {# ------------ MacroLAN ------------ -#}
 
@@ -380,7 +389,7 @@ snmp-server ifindex persist
 
 {% if servicio == "DataInternet" %}
 
-snmp-server enable traps config
+    snmp-server enable traps config
 
     {% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
     snmp-server enable traps envmon
@@ -409,6 +418,8 @@ snmp-server enable traps config
 
 
 {# ------------------------ Configuracion de RMON ------------------------ -#}
+{{"------------------------ Configuracion de RMON ------------------------" | center }}
+
 
 {# ------------ MacroLAN, VPNIP y DataInternet ------------ -#}
 
@@ -500,6 +511,8 @@ show snmp mib ifmib ifindex
 
 
 {# ------------------------ Configuracion de SYSLOG ------------------------ -#}
+{{"------------------------ Configuracion de SYSLOG ------------------------" | center }}
+
 
 logging buffered  {{Tamano_Buffer}}  debugging
 no logging console
@@ -507,3 +520,5 @@ logging facility  {{Local_x}}
 logging  {{IPServidorSyslog}} 
 logging trap informational
 logging rate-limit console 10 except errors
+
+
