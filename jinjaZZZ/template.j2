@@ -9,5 +9,5 @@ rmon event 59 log trap  {{Comunidad_Lectura_2}}  description ERRORES_DE_SALIDA_B
 rmon event 62 log trap  {{Comunidad_Lectura_2}}  description ERRORES_COLISIONES owner config
 rmon event 63 log trap  {{Comunidad_Lectura_2}}  description ERRORES_COLISIONES_RECUPERADAS owner config
 {% for alarma in monitorizacion_variables_MIB %}
-rmon alarm {{alarma.codigo_alarma}} {{alarma.OID}} {{alarma.instancia}} {{alarma.Y}}  delta rising-threshold  {{alarma.Z}}  {{alarma.Evento_SUBIDA}} falling-threshold  {{Z1}}  {{Evento_BAJADA.Z}} owner config 
+rmon alarm {{alarma.codigo_alarma}} {{alarma.OID}} {{alarma.instancia}} {{alarma.Y}}  delta rising-threshold  {{alarma.Z}}  {{alarma.Evento_SUBIDA}} falling-threshold  {{alarma.Z1}}  {{alarma.Evento_BAJADA}} owner config 
 {% endfor %}
