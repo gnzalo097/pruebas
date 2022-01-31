@@ -9,9 +9,9 @@
     - name: PROBANDO
       template: 
         src: ./template.j2 
-        dest: ./jinjaZZZ/output.txt
+        dest: ./jinja_plantilla_gestion/output.txt
         lstrip_blocks: yes
 
     - name: OUTPUT 
       shell:
-        cmd: cat ./jinjaZZZ/output.txt
+        cmd: cat ./jinja_plantilla_gestion/output.txt
