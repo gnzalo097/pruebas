@@ -2,22 +2,22 @@
 {{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
 {% endif %}
 
-{# ------------ CONFIGURACIONES COMUNES ------------ -#}
+{# ------------ CoNFIGURACIoNES CoMUNES ------------ -#}
 
 {# BANNER -#} 
 
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
 
-{# FECHA_Y_HORA -#} 
+{# FECHA_Y_HoRA -#} 
 
 clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
 {% if localizacion_canarias == false %}
 clock timezone MET 1
 {% endif %}
-clock summer-time METDST recurring last Sun Mar 2:00 last Sun Oct 3:00 
+clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
 
-{# HOSTNAME -#} 
+{# HoSTNAME -#} 
 
 hostname {{ Mnemonico_EDC }} 
 
@@ -43,7 +43,7 @@ ip subnet-zero
 service timestamps debug datetime localtime msec show-timezone
 service timestamps log datetime localtime msec show-timezone
 
-{# GESTION POR LOOPBACK -#} 
+{# GESTIoN PoR LoPBACK -#} 
 
 interface loopback 600
 description Direccion IP de gestion EDC
@@ -62,20 +62,20 @@ ntp source Loopback 600
 
 
 
-{# ------------------------ CONTROL DE ACCESO AL EDC ------------------------ -#}
+{# ------------------------ CoNTRoL DE ACCESo AL EDC ------------------------ -#}
 
-{# ------------ ESCENARIOS CON EDC SIMPLE ------------ -#}
+{# ------------ ESCENARIoS CoN EDC SIMPLE ------------ -#}
 
 
-{# Activación del servicio de encriptado de passwords -#} 
+{# Activacion del servicio de encriptado de passwords -#} 
 
 service password-encryption
 
-{# Configuración de la contraseña de acceso al modo enable  -#} 
+{# Configuracion de la contrasena de acceso al modo enable  -#} 
 
 enable secret {{Password_Enable}}
 
-{# Se crea un usuario local que permitirá el acceso al equipo vía consola y remoto  -#} 
+{# Se crea un usuario local que permitira el acceso al equipo via consola y remoto  -#} 
 
 username {{Usuario}} secret {{Password_Usuario}}
 
@@ -96,31 +96,37 @@ ip ssh version 2
 
 {#  Filtro para controlar los accesos remotos al equipo - MacroLAN, VPNIP y DataInternet  -#} 
 
-access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
-access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
-{% endfor %}
+{% if servicio == "MacroLAN" or  servicio == "VPNIP" or servicio == "DataInternet" %}
 
-access-list 52 permit host {{IP_PE_1}}
-access-list 52 permit host {{IP_PE_2}}
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_MACRoLAN_VPNIP_DATAINTERNET %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
 
-{% if VLAN_Servicio_respaldo %}
-access-list 52 permit host {{IP_PE_3}}
-access-list 52 permit host {{IP_PE_4}}
+    access-list 52 permit host {{IP_PE_1}}
+    access-list 52 permit host {{IP_PE_2}}
+
+    {% if VLAN_Servicio_respaldo %}
+    access-list 52 permit host {{IP_PE_3}}
+    access-list 52 permit host {{IP_PE_4}}
+    {% endif %}
+
+    access-list 52 deny any
+
 {% endif %}
-
-access-list 52 deny any
-
 
 {#  Filtro para controlar los accesos remotos al equipo - Servicios SILAN e Ibercom Punto Central  -#} 
 
-access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion_SILAN_IBERCOM %}
-access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
-{% endfor %}
-access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
-access-list 52 deny any
+{% if servicio == "SILAN" or  servicio == "Ibercom Punto Central" or servicio == "DataInternet" %}
 
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_SILAN_IBERCoM %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
+    access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
+    access-list 52 deny any
+
+{% endif %}
 
 {#  Configuracion extra  -#} 
 
@@ -164,44 +170,47 @@ exit
 {% endif  %}
 
 
-{#  Desactivación de los servidores HTTP/HTTPS  -#} 
+{#  Desactivacion de los servidores HTTP/HTTPS  -#} 
 
 no ip http server
 no ip http secure-server
 
 
-{# ------------ ESCENARIOS CON DOS O MAS EDC ------------ -#}
+{# ------------ ESCENARIoS CoN DoS o MAS EDC ------------ -#}
 
-no access-list 52
+{% if servicio == "VARIoS EDC" %}
 
-access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
-access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
-{% endfor %}
+    no access-list 52
 
-access-list 52 permit host {{IP_PE_1}}
-access-list 52 permit host {{IP_PE_2}}
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_MACRoLAN_VPNIP_DATAINTERNET %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
 
-{% if VLAN_Servicio_respaldo %}
-access-list 52 permit host {{IP_PE_3}}
-access-list 52 permit host {{IP_PE_4}}
-{% endif %}
+    access-list 52 permit host {{IP_PE_1}}
+    access-list 52 permit host {{IP_PE_2}}
 
-{% for IP_LAN_EDC in IPs_LAN_EDC  %}
-access-list 52 permit host  {{IP_LAN_EDC.IP}} 
-{% endfor %}
+    {% if VLAN_Servicio_respaldo %}
+    access-list 52 permit host {{IP_PE_3}}
+    access-list 52 permit host {{IP_PE_4}}
+    {% endif %}
 
-access-list 52 deny any
+    {% for IP_LAN_EDC in IPs_LAN_EDC  %}
+    access-list 52 permit host  {{IP_LAN_EDC.IP}} 
+    {% endfor %}
 
+    access-list 52 deny any
 
-{# ------------------------ Configuración TACACS+ ------------------------ -#}
+{% endif  %}
 
-{#  Creación de un nuevo modelo de AAA -#} 
+{# ------------------------ Configuracion TACACS+ ------------------------ -#}
+
+{#  Creacion de un nuevo modelo de AAA -#} 
 
 aaa new-model
 no tacacs-server directed-request
 
-{#  Configuración de los servidores TACACS+ -#} 
+{#  Configuracion de los servidores TACACS+ -#} 
 
 {% for servidor_TACACS in servidores_TACACS %}
 tacacs server TACACS+_{{loop.index}} 
@@ -216,7 +225,7 @@ server name TACACS+_{{loop.index}}
 {% endfor %}
 exit
 
-{#  MODELO ANTIGUO TACACS+ -#} 
+{#  MoDELo ANTIGUo TACACS+ -#} 
 
 {% for servidor_TACACS in servidores_TACACS %}
 tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
@@ -230,12 +239,12 @@ server  {{servidor_TACACS.IP_Servidor}}
 exit
 
 
-{#  Configuración de los parámetros de autenticación por TACACS+. -#} 
+{#  Configuracion de los parametros de autenticacion por TACACS+. -#} 
 
 aaa authentication login default group TACACS+CG local
 aaa authentication enable default group TACACS+CG enable
 
-{#  Configuración del accounting de comandos por TACACS+ -#} 
+{#  Configuracion del accounting de comandos por TACACS+ -#} 
 
 aaa accounting exec default start-stop group TACACS+CG
 aaa accounting commands 0 default start-stop group TACACS+CG
@@ -243,9 +252,9 @@ aaa accounting commands 1 default start-stop group TACACS+CG
 aaa accounting commands 15 default start-stop group TACACS+CG
 
 
-{# !! es necesario finalizar la sesión y entrar de nuevo en el equipo con los nuevos credenciales para continuar con la configuración -#} 
+{# !! es necesario finalizar la sesion y entrar de nuevo en el equipo con los nuevos credenciales para continuar con la configuracion -#} 
 
-{#  Configuración de la autorización de comandos por TACACS+ -#} 
+{#  Configuracion de la autorizacion de comandos por TACACS+ -#} 
 
 aaa authorization exec default group TACACS+CG if-authenticated
 aaa authorization commands 0 default group TACACS+CG local
@@ -253,7 +262,7 @@ aaa authorization commands 1 default group TACACS+CG local
 aaa authorization commands 15 default group TACACS+CG local
 
 
-{# ------------------------ Configuración NTP  ------------------------ -#}
+{# ------------------------ Configuracion NTP  ------------------------ -#}
 
 {% for servidor_NTP in servidores_NTP %}
 {% if loop.first  %}
@@ -273,7 +282,7 @@ access-list 53 deny any
 ntp access-group peer 53
 
 
-{# ------------------------ Configuración SNMP ------------------------ -#}
+{# ------------------------ Configuracion SNMP ------------------------ -#}
 
 {#  filtro para controlar los accesos de lectura SNMP -#} 
 
@@ -300,7 +309,7 @@ snmp-server contact  {{Persona_de_Contacto}}
 
 {#  Comunidades de lectura y lectura/escritura -#} 
 
-snmp-server community  {{Comunidad_SNMP_Lectura}}  RO 50
+snmp-server community  {{Comunidad_SNMP_Lectura}}  Ro 50
 snmp-server community  {{Comunidad_SNMP_Escritura}}  RW 51
 
 {#  Control de accesos TFTP -#} 
@@ -310,163 +319,185 @@ snmp-server file-transfer access-group 51 protocol tftp
 {% endif %}
 snmp-server tftp-server-list 51
 
-{#  Se añade persistencia a los índices de los interfaces del equipo. -#} 
+{#  Se anade persistencia a los indices de los interfaces del equipo. -#} 
 
 snmp-server ifindex persist
 
 
-{# ------------------------ Activación de traps SNMP ------------------------ -#}
+{# ------------------------ Activacion de traps SNMP ------------------------ -#}
 
 {# ------------ MacroLAN ------------ -#}
 
-snmp-server enable traps
-no snmp-server enable traps snmp authentication
-no snmp-server enable traps syslog
+{% if servicio == "MacroLAN" %}
 
-{% if Ejecutar_Comando %}
-no snmp-server enable traps isdn
-snmp-server enable traps isdn call-information
+    snmp-server enable traps
+    no snmp-server enable traps snmp authentication
+    no snmp-server enable traps syslog
+
+    {% if Ejecutar_Comando %}
+    no snmp-server enable traps isdn
+    snmp-server enable traps isdn call-information
+    {% endif %}
+
 {% endif %}
-
 
 {# ------------ VPNIP ------------ -#}
 
-{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
-snmp-server enable traps isdn call-information 
+{% if servicio == "VPNIP" %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps isdn call-information 
+    {% endif %}
+
+    snmp-server enable traps config
+    snmp-server enable traps entity
+
+    {% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %}
+    snmp-server enable traps envmon
+    {% endif %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps bgp 
+    snmp-server enable traps frame-relay 
+    snmp-server enable traps rtr 
+    {% endif %}
+
+    {% if Ejecutar_Comando %}
+    snmp-server enable traps isdn 
+    {% endif %}
+
+    snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps atm pvc
+    {% endif %}
+
 {% endif %}
-
-snmp-server enable traps config
-snmp-server enable traps entity
-
-{% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %}
-snmp-server enable traps envmon
-{% endif %}
-
-{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
-snmp-server enable traps bgp 
-snmp-server enable traps frame-relay 
-snmp-server enable traps rtr 
-{% endif %}
-
-{% if Ejecutar_Comando %}
-snmp-server enable traps isdn 
-{% endif %}
-
-snmp-server enable traps snmp linkup linkdown coldstart warmstart
-
-{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
-snmp-server enable traps atm pvc
-{% endif %}
-
 
 {# ------------ DataInternet ------------ -#}
 
+{% if servicio == "DataInternet" %}
+
 snmp-server enable traps config
 
-{% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
-snmp-server enable traps envmon
+    {% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+    snmp-server enable traps envmon
+    {% endif %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps bgp 
+    snmp-server enable traps rtr 
+    {% endif %}
+
+    snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps atm pvc 
+    {% endif %}
+
 {% endif %}
 
-{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
-snmp-server enable traps bgp 
-snmp-server enable traps rtr 
-{% endif %}
+{# ------------ SILAN e Ibercom Punto Central ------------ -#}
 
-snmp-server enable traps snmp linkup linkdown coldstart warmstart
+{% if servicio == "SILAN" or servicio == "Ibercom Punto Central" %}
 
-{% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
-snmp-server enable traps atm pvc 
+    snmp-server enable traps
+
 {% endif %}
 
 
-{# ------------ SILAN e Ibercom IP Punto Central ------------ -#}
-
-snmp-server enable traps
-
-
-
-
-{# ------------------------ Configuracion de RMON ------------------------ -#}
+{# ------------------------ Configuracion de RMoN ------------------------ -#}
 
 {# ------------ MacroLAN, VPNIP y DataInternet ------------ -#}
 
-{#  Definicion de EVENTOS y ALARMAS RMON para variables MIB de una unica instancia -#} 
+{% if servicio == "MacroLAN" or  servicio == "VPNIP" or servicio == "DataInternet" %}
 
-rmon event 100 log trap  {{Comunidad_Lectura_1}}  description NUM_INTERFACES_HA_CAMBIADO owner config
-rmon event 200 log trap  {{Comunidad_Lectura_1}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
-rmon event 201 log trap  {{Comunidad_Lectura_1}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
-rmon event 300 log trap  {{Comunidad_Lectura_1}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
-rmon event 301 log trap  {{Comunidad_Lectura_1}}  description USO_DE_CPU_ACEPTABLE owner config
-rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
-rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
-rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
 
-{#  Definicion de EVENTOS y ALARMAS RMON para variables MIB de varias instancias -#} 
+    {#  Definicion de EVENToS y ALARMAS RMoN para variables MIB de una unica instancia -#} 
 
-rmon event 52 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_MAL owner config 
-rmon event 53 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_BIEN owner config 
-rmon event 54 log trap  {{Comunidad_Lectura_2}}  description ERRORES_DE_ENTRADA_MAL owner config 
-rmon event 55 log trap  {{Comunidad_Lectura_2}}  description ERRORES_DE_ENTRADA_BIEN owner config 
-rmon event 56 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_SALIDA_MAL owner config 
-rmon event 57 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_SALIDA_BIEN owner config 
-rmon event 58 log trap  {{Comunidad_Lectura_2}}  description ERRORES_DE_SALIDA_MAL owner config 
-rmon event 59 log trap  {{Comunidad_Lectura_2}}  description ERRORES_DE_SALIDA_BIEN owner config 
-rmon event 62 log trap  {{Comunidad_Lectura_2}}  description ERRORES_COLISIONES owner config
-rmon event 63 log trap  {{Comunidad_Lectura_2}}  description ERRORES_COLISIONES_RECUPERADAS owner config
-{% for alarma in monitorizacion_variables_MIB %}
-rmon alarm {{alarma.codigo_alarma}} {{alarma.OID}} {{alarma.instancia}} {{alarma.Y}}  delta rising-threshold  {{alarma.Z}}  {{alarma.Evento_SUBIDA}} falling-threshold  {{alarma.Z1}}  {{alarma.Evento_BAJADA}} owner config 
-{% endfor %}
+    rmon event 100 log trap  {{Comunidad_Lectura_1}}  description NUM_INTERFACES_HA_CAMBIADo owner config
+    rmon event 200 log trap  {{Comunidad_Lectura_1}}  description MEMoRIA_LIBRE_SUPERIoR_A_500K owner config
+    rmon event 201 log trap  {{Comunidad_Lectura_1}}  description MEMoRIA_LIBRE_INFERIoR_A_500K owner config
+    rmon event 300 log trap  {{Comunidad_Lectura_1}}  description SUPERADo_UMBRAL_DE_USo_DE_CPU owner config
+    rmon event 301 log trap  {{Comunidad_Lectura_1}}  description USo_DE_CPU_ACEPTABLE owner config
+    rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+    rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+    rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+
+    {#  Definicion de EVENToS y ALARMAS RMoN para variables MIB de varias instancias -#} 
+
+    rmon event 52 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_MAL owner config 
+    rmon event 53 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_BIEN owner config 
+    rmon event 54 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_DE_ENTRADA_MAL owner config 
+    rmon event 55 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_DE_ENTRADA_BIEN owner config 
+    rmon event 56 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_SALIDA_MAL owner config 
+    rmon event 57 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_SALIDA_BIEN owner config 
+    rmon event 58 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_DE_SALIDA_MAL owner config 
+    rmon event 59 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_DE_SALIDA_BIEN owner config 
+    rmon event 62 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_CoLISIoNES owner config
+    rmon event 63 log trap  {{Comunidad_Lectura_2}}  description ERRoRES_CoLISIoNES_RECUPERADAS owner config
+    {% for alarma in monitorizacion_variables_MIB %}
+    rmon alarm {{alarma.codigo_alarma}} {{alarma.oID}} {{alarma.instancia}} {{alarma.Y}}  delta rising-threshold  {{alarma.Z}}  {{alarma.Evento_SUBIDA}} falling-threshold  {{alarma.Z1}}  {{alarma.Evento_BAJADA}} owner config 
+    {% endfor %}
+
+{% endif %}
 
 {#  mostrar el numero de identificacion de indice SNMP para todos los interfaces -#} 
 
-{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
+{% if version_IoS.split('.') | map('int') | list >= [12, 2, 2]  %}
 show snmp mib ifmib ifindex 
 {% else %}
-/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO_1}} {{IP_Gestion_1}} ifDescr
+/opt/oV/bin/snmpwalk -v 1 -c {{SNMP_Ro_1}} {{IP_Gestion_1}} ifDescr
 {% endif %}
 
 
 {# ------------ SILAN ------------ -#}
 
-rmon event 46 log trap  {{Comunidad_Lectura_3}}  description ERRORES_COLISIONES owner config
-rmon event 47 log trap  {{Comunidad_Lectura_3}}  description ERRORES_COLISIONES_RECUPERADAS owner config
-rmon event 100 log trap  {{Comunidad_Lectura_3}}  description NUM_INTERFACES_HA_CAMBIADO owner config
-rmon event 200 log trap  {{Comunidad_Lectura_3}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
-rmon event 201 log trap  {{Comunidad_Lectura_3}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
-rmon event 300 log trap  {{Comunidad_Lectura_3}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
-rmon event 301 log trap  {{Comunidad_Lectura_3}}  description USO_DE_CPU_ACEPTABLE owner config
-rmon alarm 100 ifNumber.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
-rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
-rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
-rmon alarm 46001 lifEntry.25.10001 900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
+{% if servicio == "SILAN" %}
 
+    rmon event 46 log trap  {{Comunidad_Lectura_3}}  description ERRoRES_CoLISIoNES owner config
+    rmon event 47 log trap  {{Comunidad_Lectura_3}}  description ERRoRES_CoLISIoNES_RECUPERADAS owner config
+    rmon event 100 log trap  {{Comunidad_Lectura_3}}  description NUM_INTERFACES_HA_CAMBIADo owner config
+    rmon event 200 log trap  {{Comunidad_Lectura_3}}  description MEMoRIA_LIBRE_SUPERIoR_A_500K owner config
+    rmon event 201 log trap  {{Comunidad_Lectura_3}}  description MEMoRIA_LIBRE_INFERIoR_A_500K owner config
+    rmon event 300 log trap  {{Comunidad_Lectura_3}}  description SUPERADo_UMBRAL_DE_USo_DE_CPU owner config
+    rmon event 301 log trap  {{Comunidad_Lectura_3}}  description USo_DE_CPU_ACEPTABLE owner config
+    rmon alarm 100 ifNumber.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+    rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+    rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+    rmon alarm 46001 lifEntry.25.10001 900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
 
-{# ------------ Ibercom IP Punto Central ------------ -#}
+{% endif %}
 
-rmon event 46 log trap  {{Comunidad_Lectura_4}}  description ERRORES_COLISIONES owner config
-rmon event 47 log trap  {{Comunidad_Lectura_4}}  description ERRORES_COLISIONES_RECUPERADAS owner config
-rmon event 100 log trap  {{Comunidad_Lectura_4}}  description NUM_INTERFACES_HA_CAMBIADO owner config
-rmon event 200 log trap  {{Comunidad_Lectura_4}}  description MEMORIA_LIBRE_SUPERIOR_A_500K owner config
-rmon event 201 log trap  {{Comunidad_Lectura_4}}  description MEMORIA_LIBRE_INFERIOR_A_500K owner config
-rmon event 300 log trap  {{Comunidad_Lectura_4}}  description SUPERADO_UMBRAL_DE_USO_DE_CPU owner config
-rmon event 301 log trap  {{Comunidad_Lectura_4}}  description USO_DE_CPU_ACEPTABLE owner config
-rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
-rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
-rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
-rmon alarm 46001 1.3.6.1.4.1.9.2.2.1.1.25. {{X}}  900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
+{# ------------ Ibercom Punto Central ------------ -#}
 
+{% if servicio == "Ibercom Punto Central" %}
+
+    rmon event 46 log trap  {{Comunidad_Lectura_4}}  description ERRoRES_CoLISIoNES owner config
+    rmon event 47 log trap  {{Comunidad_Lectura_4}}  description ERRoRES_CoLISIoNES_RECUPERADAS owner config
+    rmon event 100 log trap  {{Comunidad_Lectura_4}}  description NUM_INTERFACES_HA_CAMBIADo owner config
+    rmon event 200 log trap  {{Comunidad_Lectura_4}}  description MEMoRIA_LIBRE_SUPERIoR_A_500K owner config
+    rmon event 201 log trap  {{Comunidad_Lectura_4}}  description MEMoRIA_LIBRE_INFERIoR_A_500K owner config
+    rmon event 300 log trap  {{Comunidad_Lectura_4}}  description SUPERADo_UMBRAL_DE_USo_DE_CPU owner config
+    rmon event 301 log trap  {{Comunidad_Lectura_4}}  description USo_DE_CPU_ACEPTABLE owner config
+    rmon alarm 100 interfaces.1.0 900 delta rising-threshold 1 100 falling-threshold -1 100 owner config
+    rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
+    rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
+    rmon alarm 46001 1.3.6.1.4.1.9.2.2.1.1.25. {{X}}  900 delta rising-threshold 100 46 falling-threshold 100 47 owner config
+
+{% endif %}
 
 {#  mostrar el numero de identificacion de indice SNMP para todos los interfaces -#} 
 
-{% if version_IOS.split('.') | map('int') | list >= [12, 2, 2]  %}
+{% if version_IoS.split('.') | map('int') | list >= [12, 2, 2]  %}
 show snmp mib ifmib ifindex 
 {% else %}
-/opt/OV/bin/snmpwalk -v 1 -c {{SNMP_RO_2}} {{IP_Gestion_2}} ifDescr
+/opt/oV/bin/snmpwalk -v 1 -c {{SNMP_Ro_2}} {{IP_Gestion_2}} ifDescr
 {% endif %}
 
 
 
-{# ------------------------ Configuracion de SYSLOG ------------------------ -#}
+{# ------------------------ Configuracion de SYSLoG ------------------------ -#}
 
 logging buffered  {{Tamano_Buffer}}  debugging
 no logging console
