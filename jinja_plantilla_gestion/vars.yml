@@ -1,16 +1,16 @@
 ---
 
-modelos_soportados:
-  - Cisco 892FSP
-  - Familia ISR1100
-  - Familia ISR4000
-  - Cisco ASR1001-X
-  - Cisco ASR1009-X
-  - Cisco ASR920
-  - Cisco ASR903
-  - Cisco C9200L
-  - Cisco C9300L
-  - Cisco C1000
+modelos_soportados_y_version:
+  - {equipo: Cisco 892FSP, version: 15.4.3.3 } # 15.4(3)M3
+  - {equipo: Familia ISR1100, version: 16.9.4 }
+  - {equipo: Familia ISR4000, version: 16.9.4 }
+  - {equipo: Cisco ASR1001-X, version: 16.9.4 }
+  - {equipo: Cisco ASR1009-X, version: 16.9.6 }
+  - {equipo: Cisco ASR920, version: 16.9.4 }
+  - {equipo: Cisco ASR903, version: 16.12.3 }
+  - {equipo: Cisco C9200L, version: 16.12.4 }
+  - {equipo: Cisco C9300L, version: 16.12.4 }
+  - {equipo: Cisco C1000, version: 15.2.7.3 } # 15.2(7)E3k
 
 servicios_soportados:
   - MacroLAN
