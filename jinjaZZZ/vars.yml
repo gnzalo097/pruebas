@@ -1,5 +1,7 @@
 ---
 
+modelo_equipo: Cisco C1000
+
 modelos_soportados_y_version:
   - {equipo: Cisco 892FSP, version: 15.4.3 }
   - {equipo: Familia ISR1100, version: 16.9.4 }
