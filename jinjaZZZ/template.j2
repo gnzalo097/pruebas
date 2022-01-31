@@ -1,6 +1,9 @@
 {% if modelo_equipo not in modelos_soportados %}
-{{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
+{{ ' -- EL EQUIPo No ESTA DENTRo DE LoS EQUIPoS SoPoRTADoS -- ' | center }}
 {% endif %}
+
+
+
 
 {# ------------ CoNFIGURACIoNES CoMUNES ------------ -#}
 
@@ -99,7 +102,7 @@ ip ssh version 2
 {% if servicio == "MacroLAN" or  servicio == "VPNIP" or servicio == "DataInternet" %}
 
     access-list 52 remark Accesos Remotos
-    {% for CentroGestion in CentrosGestion_MACRoLAN_VPNIP_DATAINTERNET %}
+    {% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
     access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
     {% endfor %}
 
@@ -183,7 +186,7 @@ no ip http secure-server
     no access-list 52
 
     access-list 52 remark Accesos Remotos
-    {% for CentroGestion in CentrosGestion_MACRoLAN_VPNIP_DATAINTERNET %}
+    {% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
     access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
     {% endfor %}
 
