@@ -1,6 +1,7 @@
-{% if modelo_equipo not in modelos_soportados %}
+{% if modelo_equipo not in modelos_soportados_y_version  | map(attribute='equipo') %}
 {{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
 {% endif %}
+
 
 {% if servicio not in servicios_soportados %}
 {{ ' -- EL SERVICIO NO ESTA DENTRO DE LOS SERVICIOS SOPORTADOS -- ' | center }}
