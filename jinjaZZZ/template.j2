@@ -189,3 +189,129 @@ access-list 52 permit host  {{IP_LAN_EDC.IP}}
 
 access-list 52 deny any
 
+
+{# ------------------------ Configuración TACACS+ ------------------------ -#}
+
+{#  Creación de un nuevo modelo de AAA -#} 
+
+aaa new-model
+no tacacs-server directed-request
+
+{#  Configuración de los servidores TACACS+ -#} 
+
+aaa new-model
+no tacacs-server directed-request
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs server TACACS+_{{loop.index}} 
+address ipv4  {{servidor_TACACS.IP_Servidor}} 
+key  {{servidor_TACACS.CLAVE_Servidor}} 
+exit
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+{% for servidor_TACACS in servidores_TACACS %}
+server name TACACS+_{{loop.index}} 
+{% endfor %}
+exit
+
+{#  MODELO ANTIGUO TACACS+ -#} 
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+
+{% for servidor_TACACS in servidores_TACACS %}
+server  {{servidor_TACACS.IP_Servidor}} 
+{% endfor %}
+exit
+
+
+{#  Configuración de los parámetros de autenticación por TACACS+. -#} 
+
+aaa authentication login default group TACACS+CG local
+aaa authentication enable default group TACACS+CG enable
+
+{#  Configuración del accounting de comandos por TACACS+ -#} 
+
+aaa accounting exec default start-stop group TACACS+CG
+aaa accounting commands 0 default start-stop group TACACS+CG
+aaa accounting commands 1 default start-stop group TACACS+CG
+aaa accounting commands 15 default start-stop group TACACS+CG
+
+
+{# !! es necesario finalizar la sesión y entrar de nuevo en el equipo con los nuevos credenciales para continuar con la configuración -#} 
+
+{#  Configuración de la autorización de comandos por TACACS+ -#} 
+
+aaa authorization exec default group TACACS+CG if-authenticated
+aaa authorization commands 0 default group TACACS+CG local
+aaa authorization commands 1 default group TACACS+CG local
+aaa authorization commands 15 default group TACACS+CG local
+
+
+{# ------------------------ Configuración NTP  ------------------------ -#}
+
+{% for servidor_NTP in servidores_NTP %}
+{% if loop.first  %}
+ntp server  {{servidor_NTP.IPServidor}}  prefer
+{% else %}
+ntp server  {{servidor_NTP.IPServidor}}
+{% endif %}
+{% endfor %}
+
+access-list 53 remark Gestion NTP
+
+{% for servidor_NTP in servidores_NTP %}
+access-list 53 permit host  {{servidor_NTP.IPServidor}} 
+{% endfor %}
+
+access-list 53 deny any
+ntp access-group peer 53
+
+
+{# ------------------------ Configuración SNMP ------------------------ -#}
+
+{#  filtro para controlar los accesos de lectura SNMP -#} 
+
+access-list 50 remark Gestion SNMP lectura
+{% for servidor_SNMP in servidores_SNMP %}
+access-list 50 permit host  {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
+{% endfor %}
+access-list 50 deny any
+
+
+{#  filtro para controlar los accesos de lectura/escritura SNMP -#} 
+
+access-list 51 remark Gestion SNMP escritura 
+{% for servidor_SNMP in servidores_SNMP %}
+access-list 51 permit {{servidor_SNMP.CentroGestion}} {{servidor_SNMP.MascaraInversa}} 
+{% endfor %}
+access-list 51 deny any
+
+{#  Datos administrativos -#} 
+
+snmp-server location  {{Localizacion_EDC}} 
+snmp-server chassis-id  {{Mnemonico_EDC}} 
+snmp-server contact  {{Persona_de_Contacto}} 
+
+{#  Comunidades de lectura y lectura/escritura -#} 
+
+snmp-server community  {{Comunidad_SNMP_Lectura}}  RO 50
+snmp-server community  {{Comunidad_SNMP_Escritura}}  RW 51
+
+{#  Control de accesos TFTP -#} 
+
+{% if modelo_equipo == "Cisco C9200L" or modelo_equipo == "Cisco C9300L" %}
+snmp-server file-transfer access-group 51 protocol tftp
+{% endif %}
+snmp-server tftp-server-list 51
+
+{#  Se añade persistencia a los índices de los interfaces del equipo. -#} 
+
+snmp-server ifindex persist
+
+
+
