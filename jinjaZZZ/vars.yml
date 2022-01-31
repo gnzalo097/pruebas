@@ -22,7 +22,7 @@ servicios_soportados:
 
 # ------- DATOS GENERALES
 
-modelo_equipo: Cisco C1000
+modelo_equipo: Nisu
 fabricante_equipo: Cisco
 version_IOS_equipo: 15.2.7
 
