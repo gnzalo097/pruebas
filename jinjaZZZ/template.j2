@@ -15,4 +15,4 @@ todos >> {{ modelos_soportados_y_version | join('\n') }}
 
 
 
-{{ modelos_soportados_y_version  | map(attribute='equipo') | join('\n') }}
+{{ modelos_soportados_y_version  | map(attribute='equipo') | join('\n') | map(attribute='version') | join('\n') }}
