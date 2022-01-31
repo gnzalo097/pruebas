@@ -59,7 +59,7 @@ IPGestion: 192.168.1.1
 
 # ------- DATOS CONFIGURACIONES EDC SIMPLE
 
-# Contraseña de acceso al modo enable
+# Contrasena de acceso al modo enable
 Password_Enable: pass_enable
 
 # Usuario local 
@@ -263,7 +263,7 @@ Comunidad_Lectura_3: community
 Comunidad_Lectura_4: community
 X: aaa
 
-version_IOS: 13.0.0
+# version_IOS: DATOS GENERALES
 SNMP_RO_2: null
 IP_Gestion_2: null
 
@@ -273,6 +273,7 @@ IP_Gestion_2: null
 Tamano_Buffer: 100000
 Local_x: 5
 IPServidorSyslog: 5.5.5.5
+
 
 
 
