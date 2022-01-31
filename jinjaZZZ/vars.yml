@@ -19,17 +19,22 @@ servicios_soportados:
   - SILAN
   - Ibercom Punto Central
 
+escenarios_soportados:
+  - UNICO EDC
+  - VARIOS EDC
+
+
 
 # ------- DATOS GENERALES
 
-modelo_equipo: Nisu
+modelo_equipo: Cisco C1000
 fabricante_equipo: Cisco
 version_IOS_equipo: 15.2.7
 
 Mnemonico_EDC: EDC-150
 
-servicio: null
-escenario: null
+servicio: MacroLAN
+escenario: UNICO EDC
 
 # ------- DATOS CONFIGURACIONES COMUNES
 
@@ -268,7 +273,6 @@ IP_Gestion_2: null
 Tamano_Buffer: 100000
 Local_x: 5
 IPServidorSyslog: 5.5.5.5
-
 
 
 
