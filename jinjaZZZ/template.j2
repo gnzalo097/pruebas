@@ -170,7 +170,7 @@ no ip http secure-server
 no access-list 52
 
 access-list 52 remark Accesos Remotos
-{% for CentroGestion in CentrosGestion %}
+{% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
 access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
 {% endfor %}
 
