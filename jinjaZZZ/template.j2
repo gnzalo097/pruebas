@@ -1,3 +1,7 @@
+{% if modelo_equipo not in modelos_soportados_y_version %}
+{{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
+{% endif %}
+
 
 {% for item in modelos_soportados_y_version %}
 {{item.equipo}} - {{item.version}}
