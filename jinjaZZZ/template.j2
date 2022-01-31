@@ -1,19 +1,17 @@
 
 {% if modelo_equipo not in modelos_soportados %}
-{{ ' -- EL EQUIPO No ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
+{{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
 {% endif %}
 
 
-
-
-{# ------------ CoNFIGURACIoNES CoMUNES ------------ -#}
+{# ------------ CoNFIGURACIoNES COMUNES ------------ -#}
 
 {# BANNER -#} 
 
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
 
-{# FECHA_Y_HoRA -#} 
+{# FECHA_Y_HORA -#} 
 
 clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
 {% if localizacion_canarias == false %}
@@ -21,7 +19,7 @@ clock timezone MET 1
 {% endif %}
 clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
 
-{# HoSTNAME -#} 
+{# HOSTNAME -#} 
 
 hostname {{ Mnemonico_EDC }} 
 
@@ -47,7 +45,7 @@ ip subnet-zero
 service timestamps debug datetime localtime msec show-timezone
 service timestamps log datetime localtime msec show-timezone
 
-{# GESTIoN PoR LoPBACK -#} 
+{# GESTION PoR LOOPBACK -#} 
 
 interface loopback 600
 description Direccion IP de gestion EDC
@@ -66,7 +64,7 @@ ntp source Loopback 600
 
 
 
-{# ------------------------ CoNTRoL DE ACCESo AL EDC ------------------------ -#}
+{# ------------------------ CoNTROL DE ACCESO AL EDC ------------------------ -#}
 
 {# ------------ ESCENARIOS CoN EDC SIMPLE ------------ -#}
 
@@ -417,7 +415,7 @@ snmp-server enable traps config
 {% if servicio == "MacroLAN" or  servicio == "VPNIP" or servicio == "DataInternet" %}
 
 
-    {#  Definicion de EVENToS y ALARMAS RMON para variables MIB de una unica instancia -#} 
+    {#  Definicion de EVENTOS y ALARMAS RMON para variables MIB de una unica instancia -#} 
 
     rmon event 100 log trap  {{Comunidad_Lectura_1}}  description NUM_INTERFACES_HA_CAMBIADo owner config
     rmon event 200 log trap  {{Comunidad_Lectura_1}}  description MEMoRIA_LIBRE_SUPERIoR_A_500K owner config
@@ -428,7 +426,7 @@ snmp-server enable traps config
     rmon alarm 200 lsystem.8.0 3600 absolute rising-threshold 500000 200 falling-threshold 500000 201 owner config
     rmon alarm 300 lsystem.58.0 900 absolute rising-threshold 70 300 falling-threshold 55 301 owner config
 
-    {#  Definicion de EVENToS y ALARMAS RMON para variables MIB de varias instancias -#} 
+    {#  Definicion de EVENTOS y ALARMAS RMON para variables MIB de varias instancias -#} 
 
     rmon event 52 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_MAL owner config 
     rmon event 53 log trap  {{Comunidad_Lectura_2}}  description DESCARTES_DE_ENTRADA_BIEN owner config 
@@ -501,7 +499,7 @@ show snmp mib ifmib ifindex
 
 
 
-{# ------------------------ Configuracion de SYSLoG ------------------------ -#}
+{# ------------------------ Configuracion de SYSLOG ------------------------ -#}
 
 logging buffered  {{Tamano_Buffer}}  debugging
 no logging console
@@ -509,15 +507,3 @@ logging facility  {{Local_x}}
 logging  {{IPServidorSyslog}} 
 logging trap informational
 logging rate-limit console 10 except errors
-
-
-
-{# ------------------------ Configuracion de SYSLoG ------------------------ -#}
-
-logging buffered  {{Tamano_Buffer}}  debugging
-no logging console
-logging facility  {{Local_x}} 
-logging  {{IPServidorSyslog}} 
-logging trap informational
-logging rate-limit console 10 except errors
-
