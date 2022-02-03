@@ -8,7 +8,7 @@
   tasks: 
     - name: PROBANDO
       template: 
-        src: ./template.j2 
+        src: ./template2.j2 
         dest: ./jinja_plantilla_gestion_include/output.txt
         lstrip_blocks: yes
 
