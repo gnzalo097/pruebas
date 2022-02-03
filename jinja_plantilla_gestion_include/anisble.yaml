@@ -1,0 +1,17 @@
+---
+- hosts: all
+  connection: network_cli
+  gather_facts: 'no'
+  vars_files:
+    - vars.yml
+
+  tasks: 
+    - name: PROBANDO
+      template: 
+        src: ./template.j2 
+        dest: ./jinja_plantilla_gestion_include/output.txt
+        lstrip_blocks: yes
+
+    - name: OUTPUT 
+      shell:
+        cmd: cat ./jinja_plantilla_gestion_include/output.txt
