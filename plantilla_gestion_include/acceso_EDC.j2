@@ -1,0 +1,141 @@
+{# ------------------------ CONTROL DE ACCESO AL EDC ------------------------ -#}
+{{"------------------------ CONTROL DE ACCESO AL EDC ------------------------" | center }}
+
+{# ------------ ESCENARIOS CON EDC SIMPLE ------------ -#}
+
+
+{# Activacion del servicio de encriptado de passwords -#} 
+
+service password-encryption
+
+{# Configuracion de la contrasena de acceso al modo enable  -#} 
+
+enable secret {{Password_Enable}}
+
+{# Se crea un usuario local que permitira el acceso al equipo via consola y remoto  -#} 
+
+username {{Usuario}} secret {{Password_Usuario}}
+
+
+{#  Habilita el acceso SSH al equipo  -#} 
+
+{% if modelo_equipo =="Cisco ASR903" or modelo_equipo =="Cisco ASR920" or modelo_equipo =="Cisco ASR1000" or modelo_equipo =="Familia ISR4000" or modelo_equipo =="Familia ISR1100" or modelo_equipo =="Cisco ASR1009-X" %}
+ip domain name {{Mnemonico_EDC}}
+{% else %}
+ip domain-name {{Mnemonico_EDC}}
+{% endif %}
+
+crypto key generate rsa
+{# !! se queda esperando a meter el valor  -#} 
+1024
+ip ssh version 2
+
+
+{#  Filtro para controlar los accesos remotos al equipo - MacroLAN, VPNIP y DataInternet  -#} 
+
+{% if servicio == "MacroLAN" or  servicio == "VPNIP" or servicio == "DataInternet" %}
+
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
+
+    access-list 52 permit host {{IP_PE_1}}
+    access-list 52 permit host {{IP_PE_2}}
+
+    {% if VLAN_Servicio_respaldo %}
+    access-list 52 permit host {{IP_PE_3}}
+    access-list 52 permit host {{IP_PE_4}}
+    {% endif %}
+
+    access-list 52 deny any
+
+{% endif %}
+
+{#  Filtro para controlar los accesos remotos al equipo - Servicios SILAN e Ibercom Punto Central  -#} 
+
+{% if servicio == "SILAN" or  servicio == "Ibercom Punto Central" or servicio == "DataInternet" %}
+
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_SILAN_IBERCOM %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
+    access-list 52 permit  {{Red_VLAN_Gestion}}  {{MascaraInversa_VLAN_Gestion}}
+    access-list 52 deny any
+
+{% endif %}
+
+{#  Configuracion extra  -#} 
+
+line con 0
+login local
+exec-timeout   {{Timeout}}  
+exit
+
+{% if tiene_puerto_auxiliar %}
+
+{% if modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+
+line aux 0
+login local
+exec-timeout   {{Timeout}}   
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+{% endif %}
+{% endif %}
+
+line vty 0 4
+login local
+exec-timeout  {{Timeout}} 
+transport input telnet ssh
+transport output telnet ssh
+access-class 52 in
+exit
+
+line vty 5 15
+transport input none
+transport output none
+exit
+
+{% if modelo_equipo == "Familia ISR1100" or modelo_equipo == "Familia ISR4000" %}
+line 2
+transport input none
+exit
+{% endif  %}
+
+
+{#  Desactivacion de los servidores HTTP/HTTPS  -#} 
+
+no ip http server
+no ip http secure-server
+
+
+{# ------------ ESCENARIOS CON DOS o MAS EDC ------------ -#}
+
+{% if servicio == "VARIOS EDC" %}
+
+    no access-list 52
+
+    access-list 52 remark Accesos Remotos
+    {% for CentroGestion in CentrosGestion_MACROLAN_VPNIP_DATAINTERNET %}
+    access-list 52 permit {{CentroGestion.IP_CentroGestion}} {{CentroGestion.MascaraInversa}} 
+    {% endfor %}
+
+    access-list 52 permit host {{IP_PE_1}}
+    access-list 52 permit host {{IP_PE_2}}
+
+    {% if VLAN_Servicio_respaldo %}
+    access-list 52 permit host {{IP_PE_3}}
+    access-list 52 permit host {{IP_PE_4}}
+    {% endif %}
+
+    {% for IP_LAN_EDC in IPs_LAN_EDC  %}
+    access-list 52 permit host  {{IP_LAN_EDC.IP}} 
+    {% endfor %}
+
+    access-list 52 deny any
+
+{% endif  %}

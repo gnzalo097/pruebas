@@ -1,0 +1,81 @@
+{# ------------------------ Activacion de traps SNMP ------------------------ -#}
+{{"------------------------ Activacion de traps SNMP ------------------------" | center }}
+
+{# ------------ MacroLAN ------------ -#}
+
+{% if servicio == "MacroLAN" %}
+
+    snmp-server enable traps
+    no snmp-server enable traps snmp authentication
+    no snmp-server enable traps syslog
+
+    {% if Ejecutar_Comando %}
+    no snmp-server enable traps isdn
+    snmp-server enable traps isdn call-information
+    {% endif %}
+
+{% endif %}
+
+{# ------------ VPNIP ------------ -#}
+
+{% if servicio == "VPNIP" %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps isdn call-information 
+    {% endif %}
+
+    snmp-server enable traps config
+    snmp-server enable traps entity
+
+    {% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %}
+    snmp-server enable traps envmon
+    {% endif %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps bgp 
+    snmp-server enable traps frame-relay 
+    snmp-server enable traps rtr 
+    {% endif %}
+
+    {% if Ejecutar_Comando %}
+    snmp-server enable traps isdn 
+    {% endif %}
+
+    snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps atm pvc
+    {% endif %}
+
+{% endif %}
+
+{# ------------ DataInternet ------------ -#}
+
+{% if servicio == "DataInternet" %}
+
+    snmp-server enable traps config
+
+    {% if modelo_equipo != "Cisco ASR1001-X" and modelo_equipo != "Cisco ASR1009-X" and modelo_equipo != "Cisco ASR920" and modelo_equipo != "Cisco ASR903" and modelo_equipo != "Familia ISR4000" and modelo_equipo != "Familia ISR1100" %} 
+    snmp-server enable traps envmon
+    {% endif %}
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps bgp 
+    snmp-server enable traps rtr 
+    {% endif %}
+
+    snmp-server enable traps snmp linkup linkdown coldstart warmstart
+
+    {% if modelo_equipo != "Cisco C1000" and modelo_equipo != "Cisco C9200L" and modelo_equipo != "Cisco C9300L" %}
+    snmp-server enable traps atm pvc 
+    {% endif %}
+
+{% endif %}
+
+{# ------------ SILAN e Ibercom Punto Central ------------ -#}
+
+{% if servicio == "SILAN" or servicio == "Ibercom Punto Central" %}
+
+    snmp-server enable traps
+
+{% endif %}
