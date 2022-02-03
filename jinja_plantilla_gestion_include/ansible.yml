@@ -3,7 +3,7 @@
   connection: network_cli
   gather_facts: 'no'
   vars_files:
-    - vars.yml
+    - vars2.yml
 
   tasks: 
     - name: PROBANDO
