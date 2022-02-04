@@ -24,11 +24,10 @@ escenarios_soportados:
   - VARIOS EDC
 
 
-
 # ------- DATOS GENERALES
 
-modelo_equipo: equipoX
-version_IOS_equipo: 15.2.7
+modelo_equipo: Cisco C1000
+version_IOS_equipo: 15.2.7.3
 servicio: MacroLAN
 escenario: UNICO EDC
 
