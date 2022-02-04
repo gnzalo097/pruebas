@@ -12,7 +12,6 @@
 
 {# BANNER -#} 
 
-
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
 
@@ -53,11 +52,11 @@ service timestamps log datetime localtime msec show-timezone
 {# GESTION POR LOOPBACK -#} 
 
 interface loopback 600
-description Direccion IP de gestion EDC
-ip address {{IPGestion}} 255.255.255.255
-no ip directed-broadcast
-no ip proxy-arp
-no shutdown
+    description Direccion IP de gestion EDC
+    ip address {{IPGestion}} 255.255.255.255
+    no ip directed-broadcast
+    no ip proxy-arp
+    no shutdown
 exit
 
 ip tftp source-interface Loopback 600
@@ -223,8 +222,8 @@ no tacacs-server directed-request
 
 {% for servidor_TACACS in servidores_TACACS %}
 tacacs server TACACS+_{{loop.index}} 
-address ipv4  {{servidor_TACACS.IP_Servidor}} 
-key  {{servidor_TACACS.CLAVE_Servidor}} 
+    address ipv4  {{servidor_TACACS.IP_Servidor}} 
+    key  {{servidor_TACACS.CLAVE_Servidor}} 
 exit
 {% endfor %}
 
