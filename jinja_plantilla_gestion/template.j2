@@ -51,12 +51,12 @@ service timestamps log datetime localtime msec show-timezone
 {# GESTION POR LOOPBACK -#} 
 
 interface loopback 600
-description Direccion IP de gestion EDC
-ip address {{IPGestion}} 255.255.255.255
-no ip directed-broadcast
-no ip proxy-arp
-no shutdown
-exit
+    description Direccion IP de gestion EDC
+    ip address {{IPGestion}} 255.255.255.255
+    no ip directed-broadcast
+    no ip proxy-arp
+    no shutdown
+    exit
 
 ip tftp source-interface Loopback 600
 ip ftp source-interface Loopback 600
