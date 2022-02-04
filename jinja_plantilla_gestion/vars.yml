@@ -26,9 +26,9 @@ escenarios_soportados:
 
 # ------- DATOS GENERALES
 
-modelo_equipo: Cisco C1000
+modelo_equipo: hola
 version_IOS_equipo: 15.2.7.3
-servicio: MacroLAN
+servicio: adios
 escenario: UNICO EDC
 
 Mnemonico_EDC: EDC-150
