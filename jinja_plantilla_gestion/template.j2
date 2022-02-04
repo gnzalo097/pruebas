@@ -35,12 +35,11 @@ no service udp-small-servers
 no service finger
 no service dhcp
 {% if modelo_equipo != "Cisco C1000"  %}
-no ip source-route             
+no ip source-route           
 {% endif %}
 no ip domain-lookup
 no service config
-no ip bootp server 
-{# !! no ip bootp server !! si da error en algunos modelos no pasa nada -#} 
+no ip bootp server   !!! si da error en algunos modelos no pasa nada
 no ip name-server
 
 service nagle
