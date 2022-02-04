@@ -26,7 +26,7 @@ escenarios_soportados:
 
 # ------- DATOS GENERALES
 
-modelo_equipo: ciscoX
+modelo_equipo: Cisco C1000
 version_IOS_equipo: 15.2.7.3
 servicio: SILAN
 escenario: UNICO EDC
