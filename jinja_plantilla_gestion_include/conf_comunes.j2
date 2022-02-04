@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {# ------------ CONFIGURACIONES COMUNES ------------ -#}
 {{"------------ CONFIGURACIONES COMUNES ------------" | center }}
 
@@ -56,63 +55,3 @@ ip ftp source-interface Loopback 600
 ip tacacs source-interface Loopback 600
 logging source-interface Loopback 600
 snmp-server trap-source Loopback 600
-=======
-{# ------------ CONFIGURACIONES COMUNES ------------ -#}
-{{"------------ CONFIGURACIONES COMUNES ------------" | center }}
-
-{# BANNER -#} 
-
-banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
-banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
-
-{# FECHA_Y_HORA -#} 
-
-clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
-{% if localizacion_canarias == false %}
-clock timezone MET 1
-{% endif %}
-clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
-
-{# HOSTNAME -#} 
-
-hostname {{ Mnemonico_EDC }} 
-
-{# Desactivacion de servicios no necesarios -#}  
-
-no cdp run
-no service tcp-small-servers 
-no service udp-small-servers 
-no service finger
-no service dhcp
-{% if modelo_equipo != "Cisco C1000"  %}
-no ip source-route             
-{% endif %}
-no ip domain-lookup
-no service config
-no ip bootp server 
-{# !! no ip bootp server !! si da error en algunos modelos no pasa nada -#} 
-no ip name-server
-
-service nagle
-service tcp-keepalives-in
-ip subnet-zero
-service timestamps debug datetime localtime msec show-timezone
-service timestamps log datetime localtime msec show-timezone
-
-{# GESTION POR LOOPBACK -#} 
-
-interface loopback 600
-description Direccion IP de gestion EDC
-ip address {{IPGestion}} 255.255.255.255
-no ip directed-broadcast
-no ip proxy-arp
-no shutdown
-exit
-
-ip tftp source-interface Loopback 600
-ip ftp source-interface Loopback 600
-ip tacacs source-interface Loopback 600
-logging source-interface Loopback 600
-snmp-server trap-source Loopback 600
->>>>>>> 10e573904b6b3f6d21b6e843d38033b007375e39
-ntp source Loopback 600
