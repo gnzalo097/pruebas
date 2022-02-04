@@ -28,7 +28,7 @@ escenarios_soportados:
 
 # ------- DATOS GENERALES
 
-modelo_equipo: Cisco C1000
+modelo_equipo: equipoX
 fabricante_equipo: Cisco
 version_IOS_equipo: 15.2.7
 
