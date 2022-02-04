@@ -1,0 +1,22 @@
+<<<<<<< HEAD
+{# ------------------------ Configuracion de SYSLOG ------------------------ -#}
+{{"------------------------ Configuracion de SYSLOG ------------------------" | center }}
+
+
+logging buffered  {{Tamano_Buffer}}  debugging
+no logging console
+logging facility  {{Local_x}} 
+logging  {{IPServidorSyslog}} 
+logging trap informational
+=======
+{# ------------------------ Configuracion de SYSLOG ------------------------ -#}
+{{"------------------------ Configuracion de SYSLOG ------------------------" | center }}
+
+
+logging buffered  {{Tamano_Buffer}}  debugging
+no logging console
+logging facility  {{Local_x}} 
+logging  {{IPServidorSyslog}} 
+logging trap informational
+>>>>>>> 10e573904b6b3f6d21b6e843d38033b007375e39
+logging rate-limit console 10 except errors

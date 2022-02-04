@@ -1,0 +1,120 @@
+<<<<<<< HEAD
+
+{# ------------------------ Configuracion TACACS+ ------------------------ -#}
+{{"------------------------ Configuracion TACACS+ ------------------------" | center }}
+
+{#  Creacion de un nuevo modelo de AAA -#} 
+
+aaa new-model
+no tacacs-server directed-request
+
+{#  Configuracion de los servidores TACACS+ -#} 
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs server TACACS+_{{loop.index}} 
+address ipv4  {{servidor_TACACS.IP_Servidor}} 
+key  {{servidor_TACACS.CLAVE_Servidor}} 
+exit
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+{% for servidor_TACACS in servidores_TACACS %}
+server name TACACS+_{{loop.index}} 
+{% endfor %}
+exit
+
+{#  MODELO ANTIGUO TACACS+ -#} 
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+
+{% for servidor_TACACS in servidores_TACACS %}
+server  {{servidor_TACACS.IP_Servidor}} 
+{% endfor %}
+exit
+
+
+{#  Configuracion de los parametros de autenticacion por TACACS+. -#} 
+
+aaa authentication login default group TACACS+CG local
+aaa authentication enable default group TACACS+CG enable
+
+{#  Configuracion del accounting de comandos por TACACS+ -#} 
+
+aaa accounting exec default start-stop group TACACS+CG
+aaa accounting commands 0 default start-stop group TACACS+CG
+aaa accounting commands 1 default start-stop group TACACS+CG
+aaa accounting commands 15 default start-stop group TACACS+CG
+
+
+{# !! es necesario finalizar la sesion y entrar de nuevo en el equipo con los nuevos credenciales para continuar con la configuracion -#} 
+
+{#  Configuracion de la autorizacion de comandos por TACACS+ -#} 
+
+aaa authorization exec default group TACACS+CG if-authenticated
+aaa authorization commands 0 default group TACACS+CG local
+aaa authorization commands 1 default group TACACS+CG local
+=======
+
+{# ------------------------ Configuracion TACACS+ ------------------------ -#}
+{{"------------------------ Configuracion TACACS+ ------------------------" | center }}
+
+{#  Creacion de un nuevo modelo de AAA -#} 
+
+aaa new-model
+no tacacs-server directed-request
+
+{#  Configuracion de los servidores TACACS+ -#} 
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs server TACACS+_{{loop.index}} 
+address ipv4  {{servidor_TACACS.IP_Servidor}} 
+key  {{servidor_TACACS.CLAVE_Servidor}} 
+exit
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+{% for servidor_TACACS in servidores_TACACS %}
+server name TACACS+_{{loop.index}} 
+{% endfor %}
+exit
+
+{#  MODELO ANTIGUO TACACS+ -#} 
+
+{% for servidor_TACACS in servidores_TACACS %}
+tacacs-server host  {{servidor_TACACS.IP_Servidor}}  key  {{servidor_TACACS.CLAVE_Servidor}} 
+{% endfor %}
+
+aaa group server tacacs+ TACACS+CG
+
+{% for servidor_TACACS in servidores_TACACS %}
+server  {{servidor_TACACS.IP_Servidor}} 
+{% endfor %}
+exit
+
+
+{#  Configuracion de los parametros de autenticacion por TACACS+. -#} 
+
+aaa authentication login default group TACACS+CG local
+aaa authentication enable default group TACACS+CG enable
+
+{#  Configuracion del accounting de comandos por TACACS+ -#} 
+
+aaa accounting exec default start-stop group TACACS+CG
+aaa accounting commands 0 default start-stop group TACACS+CG
+aaa accounting commands 1 default start-stop group TACACS+CG
+aaa accounting commands 15 default start-stop group TACACS+CG
+
+
+{# !! es necesario finalizar la sesion y entrar de nuevo en el equipo con los nuevos credenciales para continuar con la configuracion -#} 
+
+{#  Configuracion de la autorizacion de comandos por TACACS+ -#} 
+
+aaa authorization exec default group TACACS+CG if-authenticated
+aaa authorization commands 0 default group TACACS+CG local
+aaa authorization commands 1 default group TACACS+CG local
+>>>>>>> 10e573904b6b3f6d21b6e843d38033b007375e39
+aaa authorization commands 15 default group TACACS+CG local

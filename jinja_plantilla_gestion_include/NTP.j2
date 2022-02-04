@@ -1,0 +1,40 @@
+<<<<<<< HEAD
+{# ------------------------ Configuracion NTP  ------------------------ -#}
+{{"------------------------ Configuracion NTP  ------------------------" | center }}
+
+{% for servidor_NTP in servidores_NTP %}
+{% if loop.first  %}
+ntp server  {{servidor_NTP.IPServidor}}  prefer
+{% else %}
+ntp server  {{servidor_NTP.IPServidor}}
+{% endif %}
+{% endfor %}
+
+access-list 53 remark Gestion NTP
+
+{% for servidor_NTP in servidores_NTP %}
+access-list 53 permit host  {{servidor_NTP.IPServidor}} 
+{% endfor %}
+
+access-list 53 deny any
+=======
+{# ------------------------ Configuracion NTP  ------------------------ -#}
+{{"------------------------ Configuracion NTP  ------------------------" | center }}
+
+{% for servidor_NTP in servidores_NTP %}
+{% if loop.first  %}
+ntp server  {{servidor_NTP.IPServidor}}  prefer
+{% else %}
+ntp server  {{servidor_NTP.IPServidor}}
+{% endif %}
+{% endfor %}
+
+access-list 53 remark Gestion NTP
+
+{% for servidor_NTP in servidores_NTP %}
+access-list 53 permit host  {{servidor_NTP.IPServidor}} 
+{% endfor %}
+
+access-list 53 deny any
+>>>>>>> 10e573904b6b3f6d21b6e843d38033b007375e39
+ntp access-group peer 53
