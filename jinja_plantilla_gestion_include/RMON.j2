@@ -41,7 +41,7 @@
 {% if version_IOS_equipo.split('.') | map('int') | list >= [12, 2, 2]  %}
 show snmp mib ifmib ifindex 
 {% else %}
-/opt/oV/bin/snmpwalk -v 1 -c {{SNMP_RO_1}} {{IP_Gestion_1}} ifDescr
+/opt/oV/bin/snmpwalk -v 1 -c {{SNMP_Ro_1}} {{IP_Gestion_1}} ifDescr
 {% endif %}
 
 
