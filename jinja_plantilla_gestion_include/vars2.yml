@@ -34,7 +34,7 @@ version_IOS_equipo: 15.2.7
 
 Mnemonico_EDC: EDC-150
 
-servicio: MacroLAN
+servicio: Flexsite
 escenario: UNICO EDC
 
 # ------- DATOS CONFIGURACIONES COMUNES
