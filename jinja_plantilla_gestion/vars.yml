@@ -26,6 +26,12 @@ escenarios_soportados:
 
 # ------- DATOS GENERALES
 
+modelo_equipo: ciscoX
+version_IOS_equipo: 15.2.7.3
+servicio: SILAN
+escenario: UNICO EDC
+
+Mnemonico_EDC: EDC-150
 
 # ------- DATOS CONFIGURACIONES COMUNES
 
