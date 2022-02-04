@@ -26,12 +26,6 @@ escenarios_soportados:
 
 # ------- DATOS GENERALES
 
-modelo_equipo: Cisco C1000
-version_IOS_equipo: 15.2.7.3
-servicio: 
-escenario: UNICO EDC
-
-Mnemonico_EDC: EDC-150
 
 # ------- DATOS CONFIGURACIONES COMUNES
 
