@@ -3,6 +3,7 @@
 
 {# BANNER -#} 
 
+
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
 
@@ -55,3 +56,4 @@ ip ftp source-interface Loopback 600
 ip tacacs source-interface Loopback 600
 logging source-interface Loopback 600
 snmp-server trap-source Loopback 600
+ntp source Loopback 600
