@@ -28,13 +28,11 @@ escenarios_soportados:
 # ------- DATOS GENERALES
 
 modelo_equipo: equipoX
-fabricante_equipo: Cisco
 version_IOS_equipo: 15.2.7
-
-Mnemonico_EDC: EDC-150
-
 servicio: MacroLAN
 escenario: UNICO EDC
+
+Mnemonico_EDC: EDC-150
 
 # ------- DATOS CONFIGURACIONES COMUNES
 
