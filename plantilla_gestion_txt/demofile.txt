@@ -1,0 +1,88 @@
+{# [titulo] Plantillas de Configuración Básica de Gestión para Equipamiento Cisco -#}
+
+{# [apartado]  PLANTILLAS DE CONFIGURACION -#}
+
+{# [sub-apartado] 	Configuración común a todos los servicios -#}
+
+{# [sub-sub-apartado]  Definición del banner -#}
+
+{# [info] Desde el modo de configuración del equipo, se especifica el banner que se mostrará antes de que el usuario introduzca sus credenciales de acceso: -#}
+
+banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
+
+{# [info] A continuación, se introduce el banner que se mostrará una vez que el usuario haya sido autenticado correctamente: -#}
+
+banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
+
+{# [info] NOTA: La escritura de los <Texto_Banner> debe comenzar y terminar con un <Caracter_Delimitador> (%, &, $, @, …) para funcionar correctamente. Además, este carácter no se puede utilizar dentro de <Texto_Banner>. Durante la introducción del texto es posible utilizar la tecla Enter para producir saltos de línea. Cada línea admite un máximo de 255 caracteres. -#}
+
+
+{# [sub-sub-apartado]  Configuración de fecha y zona horaria -#}
+
+{# [info] Desde el modo enable, se ajusta la fecha y hora locales del equipo. -#}
+
+clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+
+{# [info] Desde el modo de configuración, se configura la zona horaria y los parámetros del cambio de horario de verano. -#}
+
+{% if localizacion_canarias == false %}
+clock timezone MET 1
+{% endif %}
+clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
+
+{# [sub-sub-apartado] Nombre del equipo -#}
+
+{# [info] Asignación del mnemónico del EDC. Desde el modo de configuración: -#}
+
+hostname {{ Mnemonico_EDC }} 
+
+{# [sub-sub-apartado]  Desactivacion de servicios no necesarios -#}
+
+{# [info] Por motivos de seguridad, se desactivarán una serie de protocolos y servicios que no van a ser utilizados en el EDC. Desde el modo de configuración: -#}
+
+no cdp run
+no service tcp-small-servers 
+no service udp-small-servers 
+no service finger
+no service dhcp
+{% if modelo_equipo != "Cisco C1000"  %}
+no ip source-route           
+{% endif %}
+no ip domain-lookup
+no service config
+no ip bootp server   !!! * 
+no ip name-server
+
+{# [info] * Determinados modelos no admiten este comando al no disponer de la funcionalidad, por lo que no es problemático si al introducirlo da error. -#}
+
+{# [info] Configuración de otros parámetros generales. Desde el modo de configuración: -#}
+
+service nagle
+service tcp-keepalives-in
+ip subnet-zero
+service timestamps debug datetime localtime msec show-timezone
+service timestamps log datetime localtime msec show-timezone
+
+{# [sub-sub-apartado]  Gestión por loopback -#}
+
+{# [info] Se crea la interfaz loopback de gestión. -#}
+
+interface loopback 600
+    description Direccion IP de gestion EDC
+    ip address {{IPGestion}} 255.255.255.255
+    no ip directed-broadcast
+    no ip proxy-arp
+    no shutdown
+exit
+
+ip tftp source-interface Loopback 600
+ip ftp source-interface Loopback 600
+ip tacacs source-interface Loopback 600
+logging source-interface Loopback 600
+snmp-server trap-source Loopback 600
+ntp source Loopback 600
+
+{# [info] Donde: <IPGestión> Es la dirección IP utilizada para la gestión del EDC. Por tanto, debe ser única en todo el ámbito del servicio. -#}
+
+
+
