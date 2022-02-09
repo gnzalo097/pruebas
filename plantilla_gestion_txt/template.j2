@@ -1,16 +1,10 @@
-{% if modelo_equipo not in modelos_soportados_y_version  | map(attribute='equipo') %}
-{{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
-{% endif %}
+{# [titulo] Plantillas de Configuración Básica de Gestión para Equipamiento Cisco -#}
 
+{# [apartado] 2. PLANTILLAS DE CONFIGURACION -#}
 
-{% if servicio not in servicios_soportados %}
-{{ ' -- EL SERVICIO NO ESTA DENTRO DE LOS SERVICIOS SOPORTADOS -- ' | center }}
-{% endif %}
+{# [sub-apartado] 2.1.	Configuración común a todos los servicios -#}
 
-{# ------------ [apartado] 2.1 CONFIGURACIONES COMUNES ------------ -#}
-{{"------------ [apartado] 2.1 CONFIGURACIONES COMUNES ------------" | center }}
-
-{# [sub-apartado] 2.1.1. Definición del banner -#}
+{# [sub-sub-apartado] 2.1.1. Definición del banner -#}
 
 {# [info] Desde el modo de configuración del equipo, se especifica el banner que se mostrará antes de que el usuario introduzca sus credenciales de acceso: -#}
 
@@ -23,7 +17,7 @@ banner exec @ {{ Texto_Banner_Post_Autenticacion }} @
 {# [info] NOTA: La escritura de los <Texto_Banner> debe comenzar y terminar con un <Caracter_Delimitador> (%, &, $, @, …) para funcionar correctamente. Además, este carácter no se puede utilizar dentro de <Texto_Banner>. Durante la introducción del texto es posible utilizar la tecla Enter para producir saltos de línea. Cada línea admite un máximo de 255 caracteres. -#}
 
 
-{# [sub-apartado] 2.1.2. Configuración de fecha y zona horaria -#}
+{# [sub-sub-apartado] 2.1.2. Configuración de fecha y zona horaria -#}
 
 {# [info] Desde el modo enable, se ajusta la fecha y hora locales del equipo. -#}
 
@@ -36,11 +30,13 @@ clock timezone MET 1
 {% endif %}
 clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
 
-{# [sub-apartado] 2.1.3. Nombre del equipo -#}
+{# [sub-sub-apartado] 2.1.3. Nombre del equipo -#}
+
+{# [info] Asignación del mnemónico del EDC. Desde el modo de configuración: -#}
 
 hostname {{ Mnemonico_EDC }} 
 
-{# [sub-apartado] 2.1.4. Desactivacion de servicios no necesarios -#}
+{# [sub-sub-apartado] 2.1.4. Desactivacion de servicios no necesarios -#}
 
 {# [info] Por motivos de seguridad, se desactivarán una serie de protocolos y servicios que no van a ser utilizados en el EDC. Desde el modo de configuración: -#}
 
@@ -67,9 +63,9 @@ ip subnet-zero
 service timestamps debug datetime localtime msec show-timezone
 service timestamps log datetime localtime msec show-timezone
 
-{# [sub-apartado] 2.1.5. Gestión por loopback -#}
+{# [sub-sub-apartado] 2.1.5. Gestión por loopback -#}
 
-Se crea la interfaz loopback de gestión.
+{# [info] Se crea la interfaz loopback de gestión. -#}
 
 interface loopback 600
     description Direccion IP de gestion EDC
@@ -87,6 +83,31 @@ snmp-server trap-source Loopback 600
 ntp source Loopback 600
 
 {# [info] Donde: <IPGestión> Es la dirección IP utilizada para la gestión del EDC. Por tanto, debe ser única en todo el ámbito del servicio. -#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if modelo_equipo not in modelos_soportados_y_version  | map(attribute='equipo') %}
+{{ ' -- EL EQUIPO NO ESTA DENTRO DE LOS EQUIPOS SOPORTADOS -- ' | center }}
+{% endif %}
+
+
+{% if servicio not in servicios_soportados %}
+{{ ' -- EL SERVICIO NO ESTA DENTRO DE LOS SERVICIOS SOPORTADOS -- ' | center }}
+{% endif %}
 
 
 
