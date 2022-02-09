@@ -7,27 +7,42 @@
 {{ ' -- EL SERVICIO NO ESTA DENTRO DE LOS SERVICIOS SOPORTADOS -- ' | center }}
 {% endif %}
 
-{# ------------ CONFIGURACIONES COMUNES ------------ -#}
-{{"------------ CONFIGURACIONES COMUNES ------------" | center }}
+{# ------------ [apartado] 2.1 CONFIGURACIONES COMUNES ------------ -#}
+{{"------------ [apartado] 2.1 CONFIGURACIONES COMUNES ------------" | center }}
 
-{# BANNER -#} 
+{# [sub-apartado] 2.1.1. Definición del banner -#}
+
+{# [info] Desde el modo de configuración del equipo, se especifica el banner que se mostrará antes de que el usuario introduzca sus credenciales de acceso: -#}
 
 banner login @ {{ Texto_Banner_Pre_Autenticacion }} @ 
+
+{# [info] A continuación, se introduce el banner que se mostrará una vez que el usuario haya sido autenticado correctamente: -#}
+
 banner exec @ {{ Texto_Banner_Post_Autenticacion }} @ 
 
-{# FECHA_Y_HORA -#} 
+{# [info] NOTA: La escritura de los <Texto_Banner> debe comenzar y terminar con un <Caracter_Delimitador> (%, &, $, @, …) para funcionar correctamente. Además, este carácter no se puede utilizar dentro de <Texto_Banner>. Durante la introducción del texto es posible utilizar la tecla Enter para producir saltos de línea. Cada línea admite un máximo de 255 caracteres. -#}
+
+
+{# [sub-apartado] 2.1.2. Configuración de fecha y zona horaria -#}
+
+{# [info] Desde el modo enable, se ajusta la fecha y hora locales del equipo. -#}
 
 clock set {{ hora_minuto_segundo }} {{ dia }} {{ mes }} {{ ano }}
+
+{# [info] Desde el modo de configuración, se configura la zona horaria y los parámetros del cambio de horario de verano. -#}
+
 {% if localizacion_canarias == false %}
 clock timezone MET 1
 {% endif %}
 clock summer-time METDST recurring last Sun Mar 2:00 last Sun oct 3:00 
 
-{# HOSTNAME -#} 
+{# [sub-apartado] 2.1.3. Nombre del equipo -#}
 
 hostname {{ Mnemonico_EDC }} 
 
-{# Desactivacion de servicios no necesarios -#}  
+{# [sub-apartado] 2.1.4. Desactivacion de servicios no necesarios -#}
+
+{# [info] Por motivos de seguridad, se desactivarán una serie de protocolos y servicios que no van a ser utilizados en el EDC. Desde el modo de configuración: -#}
 
 no cdp run
 no service tcp-small-servers 
@@ -39,8 +54,12 @@ no ip source-route
 {% endif %}
 no ip domain-lookup
 no service config
-no ip bootp server   !!! si da error en algunos modelos no pasa nada
+no ip bootp server   !!! * 
 no ip name-server
+
+{# [info] * Determinados modelos no admiten este comando al no disponer de la funcionalidad, por lo que no es problemático si al introducirlo da error. -#}
+
+{# [info] Configuración de otros parámetros generales. Desde el modo de configuración: -#}
 
 service nagle
 service tcp-keepalives-in
@@ -48,7 +67,9 @@ ip subnet-zero
 service timestamps debug datetime localtime msec show-timezone
 service timestamps log datetime localtime msec show-timezone
 
-{# GESTION POR LOOPBACK -#} 
+{# [sub-apartado] 2.1.5. Gestión por loopback -#}
+
+Se crea la interfaz loopback de gestión.
 
 interface loopback 600
     description Direccion IP de gestion EDC
@@ -64,6 +85,9 @@ ip tacacs source-interface Loopback 600
 logging source-interface Loopback 600
 snmp-server trap-source Loopback 600
 ntp source Loopback 600
+
+{# [info] Donde: <IPGestión> Es la dirección IP utilizada para la gestión del EDC. Por tanto, debe ser única en todo el ámbito del servicio. -#}
+
 
 
 {# ------------------------ CONTROL DE ACCESO AL EDC ------------------------ -#}
