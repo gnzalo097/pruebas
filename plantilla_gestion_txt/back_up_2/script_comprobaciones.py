@@ -154,51 +154,109 @@ file_2 = open("template_pruebas.j2", "r")
 lines = file_2.readlines()
 
 contador_cuadro = 1
-cuadro = False
+contador_info = 1
 
-array_temporal = np.array([])
+cuadro_comandos = False
+cuadro_info = False
+
+array_temporal_comandos = np.array([])
 array_variables_cuadro = np.array([])
+
+array_temporal_info = np.array([])
+array_variables_info = np.array([])
 
 #print(lines[1])
 #print(array_cuadros[1])
 
 
 
-# EN array_temporal guarda todas las lineas de comandos de un cuadro
+# EN array_temporal_comandos guarda todas las lineas de comandos de un cuadro
 # EN array_variables_cuadro guarda todas las variables que ha encontrado en un cuadro
 for index, linea in enumerate(array_cuadros, start=0):
 
     if linea == "cuadro" + str(contador_cuadro):
 
-        cuadro = True
-
+        cuadro_comandos = True
         print(index + 1)
-
         comando = lines[index]
+        array_temporal_comandos = np.append(array_temporal_comandos, comando )
 
-        array_temporal = np.append(array_temporal, comando )
+    elif linea == "[info-var]" + str(contador_info):
+
+        if cuadro_comandos == True:
+
+            print(array_temporal_comandos)
+
+            for item in array_temporal_comandos:
+
+                variables_encontradas = re.findall('\{\{.*?\}\}',item)
+                array_variables_cuadro = np.append(array_variables_cuadro, variables_encontradas)
+
+            print(array_variables_cuadro)
+
+            cuadro_comandos = False
+            contador_cuadro += 1
+
+            array_temporal_comandos = np.array([])
+
+
+        cuadro_info = True
+        print(index + 1)
+        comando = lines[index]
+        array_temporal_info = np.append(array_temporal_info, comando )    
 
     else:
 
-        if cuadro == True:
+        if cuadro_comandos == True:
 
-            print(array_temporal)
+            print(array_temporal_comandos)
 
-            for item in array_temporal:
+            for item in array_temporal_comandos:
 
                 variables_encontradas = re.findall('\{\{.*?\}\}',item)
-
                 array_variables_cuadro = np.append(array_variables_cuadro, variables_encontradas)
 
             print(array_variables_cuadro)
 
 
-
-            cuadro = False
+            cuadro_comandos = False
             contador_cuadro += 1
 
-            array_temporal = np.array([])
+            array_temporal_comandos = np.array([])
             array_variables_cuadro = np.array([])
+
+
+        elif cuadro_info == True:
+
+            print()
+            print(array_temporal_info)
+            print()
+
+            for item in array_temporal_info:
+
+                variables_encontradas = re.findall('\{\{.*?\}\}',item)
+                array_variables_info = np.append(array_variables_info, variables_encontradas)
+
+            print(array_variables_info)
+
+            cuadro_info = False
+            contador_info += 1
+
+            print()
+            print(array_variables_cuadro)
+            print(array_variables_info)
+            print()
+
+            comparison = array_variables_cuadro == array_variables_info
+            equal_arrays = comparison.all()
+            print("---------------[[[[[[[[ " + str(equal_arrays))
+            
+
+            array_temporal_info = np.array([])
+            array_variables_info = np.array([])
+
+            array_variables_cuadro = np.array([])
+
 
         else: 
 
@@ -207,6 +265,11 @@ for index, linea in enumerate(array_cuadros, start=0):
 
 
 
+
+
+
+
+# file_2.close()
 
 file.close() 
 
