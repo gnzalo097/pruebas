@@ -9,7 +9,7 @@ def limpiar_saltos(linea):
     new_line1 = linea.replace('\n', '')
     return new_line1
 
-
+"""
 def sacar(linea):
 
     for palabra in linea:
@@ -30,10 +30,10 @@ def sacar(linea):
 
 
     return new_line1
+"""
 
-
-file_output = open(r"C:\Users\Gonzalo\Desktop\prueba_py\probando_py\word_automatico.py", "w")
-file = open("template.j2", "r")
+file_output = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\word_automatico.py", "w")
+file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\template.j2", "r")
 
 # lines = file.readlines()
 # print(lines)
@@ -222,6 +222,7 @@ for line in file:
         file_output.write("document.add_paragraph('" + new_line + "')\n")
 
  
+
 file_output.write("\ndocument.save('word_automatico_render.docx')\n")
 
 file.close() 
