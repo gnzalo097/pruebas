@@ -73,11 +73,11 @@ CentrosGestion_MACROLAN_VPNIP_DATAINTERNET:
     MascaraInversa: 255.255.255.0
 
   - CentroGestion_2:
-    IP_CentroGestion: 170.1.1.1
+    IP_CentroGestion: 170.1.1.2
     MascaraInversa: 255.255.255.0
 
   - CentroGestion_3:
-    IP_CentroGestion: 170.1.1.1
+    IP_CentroGestion: 170.1.1.3
     MascaraInversa: 255.255.255.0
 
 IP_PE_1: 1.1.1.1
