@@ -4,7 +4,7 @@
 import numpy as np
 import re
 
-file = open("template.j2", "r")
+file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\template.j2", "r")
 
 # lines = file.readlines()
 # print(lines)
@@ -134,20 +134,20 @@ for linea in array_resumen_linea:
             array_cuadros = np.append(array_cuadros, "nada" )
 
 
-print(array_resumen_linea.shape)
-print(array_cuadros.shape)
+#print(array_resumen_linea.shape)
+#print(array_cuadros.shape)
 
 #print(array_resumen_linea)
 #print(array_cuadros)
 
-print("--------------LINEAS--------------------------")
-print()
+#print("--------------LINEAS--------------------------")
+#print()
 #for x in array_resumen_linea:
 #   print(x)
 print()
 
-print("---------------CUADROS-------------------")
-print()
+#print("---------------CUADROS-------------------")
+#print()
 #for x in array_cuadros:
 #  print(x)
 print()
@@ -312,7 +312,8 @@ for index, item in enumerate(array_resultados, start=0):
 print()
 print("--------------- TODOS LOS CUADROS COINCIDEN CON LAS VARIABLES EXPLICADAS ------- [[ " + str(resultado_final) + " ]]")
 print()
-
+print()
+print()
 
 
 
