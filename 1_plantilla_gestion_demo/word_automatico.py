@@ -9,7 +9,7 @@ font.name = 'Arial'
 font.size = Pt(9)
 
 
-document.add_heading('esto es un titulo nuevo', 0)
+document.add_heading('Plantillas de Configuración Básica de Gestión para Equipamiento Cisco', 0)
 document.add_page_break()
 
 document.add_heading('1. INTRODUCCION', 1)
