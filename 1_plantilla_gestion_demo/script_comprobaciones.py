@@ -4,7 +4,7 @@
 import numpy as np
 import re
 
-file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\template.j2", "r")
+file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\1_plantilla_gestion_demo\template.j2", "r")
 
 # lines = file.readlines()
 # print(lines)
