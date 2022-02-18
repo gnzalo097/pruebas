@@ -14,4 +14,4 @@
 
     - name: OUTPUT 
       shell:
-        cmd: cat ./jinja_plantilla_gestion/output.txt
+        cmd: cat ./0 - jinja_plantilla_gestion/output.txt
