@@ -9,7 +9,7 @@ font.name = 'Arial'
 font.size = Pt(9)
 
 
-document.add_heading('Plantillas de Configuración Básica de Gestión para Equipamiento Cisco', 0)
+document.add_heading('esto es un titulo nuevo', 0)
 document.add_page_break()
 
 document.add_heading('1. INTRODUCCION', 1)
@@ -52,10 +52,10 @@ document.add_heading('2.1. Configuración común a todos los servicios', 2)
 document.add_heading('2.1.1. Definición del banner', 3)
 document.add_paragraph('Desde el modo de configuración del equipo, se especifica el banner que se mostrará antes de que el usuario introduzca sus credenciales de acceso:')
 document.add_paragraph('banner login @ {{Texto_Banner_Pre_Autenticacion}} @ ')
-document.add_paragraph('{{Texto_Banner_Pre_Autenticacion}}: esto es la explicacion')
+document.add_paragraph('{{Texto_Banner_Pre_Autenticacion}} Texto que sale antes de autenticarse ')
 document.add_paragraph('A continuación, se introduce el banner que se mostrará una vez que el usuario haya sido autenticado correctamente:')
 document.add_paragraph('banner exec @ {{Texto_Banner_Post_Autenticacion}} @ ')
-document.add_paragraph('{{Texto_Banner_Post_Autenticacion}}')
+document.add_paragraph('{{Texto_Banner_Post_Autenticacion}}  Texto que sale despues de autenticarse')
 document.add_paragraph('NOTA: La escritura de los <Texto_Banner> debe comenzar y terminar con un <Caracter_Delimitador> (%, &, $, @, …) para funcionar correctamente. Además, este carácter no se puede utilizar dentro de <Texto_Banner>. Durante la introducción del texto es posible utilizar la tecla Enter para producir saltos de línea. Cada línea admite un máximo de 255 caracteres.')
 
 document.add_heading('2.1.2. Configuración de fecha y zona horaria', 3)
@@ -64,6 +64,7 @@ document.add_paragraph('clock set {{hora_minuto_segundo}} {{dia}} {{mes}} {{ano}
 document.add_paragraph('{{hora_minuto_segundo}} formato <hh(0-23):mm(0-59):ss(0-59)>')
 document.add_paragraph('{{dia}} formato <día(1-31)>')
 document.add_paragraph('{{mes}} formato <mes(January..December)>')
+document.add_paragraph('{{ano}} formato numero')
 document.add_paragraph('Desde el modo de configuración, se configura la zona horaria y los parámetros del cambio de horario de verano.')
 document.add_paragraph('{% if localizacion_canarias == false %}')
 document.add_paragraph('clock timezone MET 1')
