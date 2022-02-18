@@ -1,4 +1,4 @@
-{# [titulo] Plantillas de Configuración Básica de Gestión para Equipamiento Cisco -#}
+{# [titulo] esto es un titulo nuevo -#}
 
 {# [apartado] INTRODUCCION -#}
 
@@ -56,13 +56,13 @@
 
 banner login @ {{Texto_Banner_Pre_Autenticacion}} @ 
 
-{# [info-var] {{Texto_Banner_Pre_Autenticacion}}: esto es la explicacion -#}
+{# [info-var] {{Texto_Banner_Pre_Autenticacion}} Texto que sale antes de autenticarse  -#}
 
 {# [info] A continuación, se introduce el banner que se mostrará una vez que el usuario haya sido autenticado correctamente: -#}
 
 banner exec @ {{Texto_Banner_Post_Autenticacion}} @ 
 
-{# [info-var] {{Texto_Banner_Post_Autenticacion}} -#}
+{# [info-var] {{Texto_Banner_Post_Autenticacion}}  Texto que sale despues de autenticarse -#}
 
 {# [info] NOTA: La escritura de los <Texto_Banner> debe comenzar y terminar con un <Caracter_Delimitador> (%, &, $, @, …) para funcionar correctamente. Además, este carácter no se puede utilizar dentro de <Texto_Banner>. Durante la introducción del texto es posible utilizar la tecla Enter para producir saltos de línea. Cada línea admite un máximo de 255 caracteres. -#}
 
@@ -79,7 +79,7 @@ clock set {{hora_minuto_segundo}} {{dia}} {{mes}} {{ano}}
 
 {# [info-var] {{mes}} formato <mes(January..December)> -#}
 
-
+{# [info-var] {{ano}} formato numero -#}
 
 {# [info] Desde el modo de configuración, se configura la zona horaria y los parámetros del cambio de horario de verano. -#}
 
