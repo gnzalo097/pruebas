@@ -9,37 +9,13 @@ def limpiar_saltos(linea):
     new_line1 = linea.replace('\n', '')
     return new_line1
 
-"""
-def sacar(linea):
-
-    for palabra in linea:
-
-        if "\{\{" in palabra and "\}\}" in palabra:
-
-            linea2 = linea.replace('{{', '')
-            linea3 = linea2.replace('}}', '')
-
-            file_output.write("parrafo.add_run(\"{{\")\n")
-            file_output.write("parrafo.add_run(" + linea3 +", style=\"mi_estilo\")\n")
-            file_output.write("parrafo.add_run(\"}}\")\n")
-
-        else:
-
-            file_output.write("parrafo.add_run(" + palabra + " \" \")\n")
 
 
-
-    return new_line1
-"""
-
-file_output = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\word_automatico.py", "w")
-file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\plantilla_gestion_demo\template.j2", "r")
+file_output = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\1_plantilla_gestion_demo\word_automatico.py", "w")
+file = open(r"C:\Users\Gonzalo\Documents\GitHub\pruebas\1_plantilla_gestion_demo\template.j2", "r")
 
 # lines = file.readlines()
 # print(lines)
-
-
-
 
 file_output.write("from docx import Document\n")
 file_output.write("from docx.shared import Inches\n")
@@ -231,4 +207,25 @@ file_output.close()
 
 
 
-    
+"""
+def sacar(linea):
+
+    for palabra in linea:
+
+        if "\{\{" in palabra and "\}\}" in palabra:
+
+            linea2 = linea.replace('{{', '')
+            linea3 = linea2.replace('}}', '')
+
+            file_output.write("parrafo.add_run(\"{{\")\n")
+            file_output.write("parrafo.add_run(" + linea3 +", style=\"mi_estilo\")\n")
+            file_output.write("parrafo.add_run(\"}}\")\n")
+
+        else:
+
+            file_output.write("parrafo.add_run(" + palabra + " \" \")\n")
+
+
+
+    return new_line1
+"""
