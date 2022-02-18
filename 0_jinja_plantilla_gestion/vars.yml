@@ -28,7 +28,7 @@ escenarios_soportados:
 
 modelo_equipo: Cisco C1000
 version_IOS_equipo: 15.2.7.3
-servicio: SILAN
+servicio: DataInternet
 escenario: UNICO EDC
 
 Mnemonico_EDC: EDC-150
